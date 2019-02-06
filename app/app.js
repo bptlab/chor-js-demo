@@ -1,8 +1,8 @@
-import diagram from './resources/subChoreographies.bpmn';
+import xml from './resources/multiple.bpmn';
 
 import $ from 'jquery';
 
-import ChoreoModeler from 'chor-js';
+import ChoreoModeler from 'chor-js/lib/Modeler';
 
 var modeler = new ChoreoModeler({
   container: '#canvas',
@@ -11,13 +11,14 @@ var modeler = new ChoreoModeler({
   }
 });
 
-modeler.importXML(diagram, function(err) {
-
-  if (err) {
-    console.error('something went wrong:', err);
-  }
-
+modeler.setXML(xml).then(result => {
+  return modeler.displayChoreography({
+    choreoID: '_choreo1'
+  });
+}).then(result => {
   modeler.get('canvas').zoom('fit-viewport');
+}).catch(error => {
+  console.error('something went wrong: ', error);
 });
 
 function saveSVG(done) {
