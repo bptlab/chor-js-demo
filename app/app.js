@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import ChoreoModeler from 'chor-js/lib/Modeler';
 
+import validate from './lib/validator/Validator';
+
 var modeler = new ChoreoModeler({
   container: '#canvas',
   keyboard: {
@@ -34,6 +36,10 @@ function saveDiagram(done) {
 $(function() {
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
+
+  $('#js-validate').click(e => {
+    validate(modeler);
+  });
 
   $('.buttons a').click(function(e) {
     if (!$(this).is('.active')) {
