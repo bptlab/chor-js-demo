@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/diagram-js.css" />
   <link rel="stylesheet" href="vendor/bpmn-js/assets/bpmn-font/css/bpmn.css" />
   <link rel="stylesheet" href="vendor/chor-js/font/include/css/choreography.css" />
+  <link rel="stylesheet" href="assets/icons/css/chor-editor.css"/>
   <link rel="stylesheet" href="css/app.css" />
 
   <style type="text/css">
@@ -23,19 +24,17 @@
     <div id="canvas"></div>
   </div>
 
+
   <ul class="buttons">
     <li>
-      download
+      <button class="icon-folder" title="Select BPMN File" onclick="document.getElementById('file-input').click();"></button>
+      <input id="file-input" name="name" type="file" accept=".bpmn, .xml" style="display: none;" >
     </li>
     <li>
-      <a id="js-download-diagram" href title="download BPMN diagram">
-        BPMN diagram
-      </a>
+      <a id="js-download-diagram" class="icon-file-code" href title="Download BPMN file"></a>
     </li>
     <li>
-      <a id="js-download-svg" href title="download as SVG image">
-        SVG image
-      </a>
+      <a id="js-download-svg" class="icon-file-image" href title="Download as SVG image"></a>
     </li>
   </ul>
 
