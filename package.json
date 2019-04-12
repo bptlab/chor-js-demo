@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
-    "chor-js": "^0.2.1",
+    "chor-js": "^0.2.2",
     "inherits": "^2.0.1",
     "jquery": "^3.3.1"
   }
