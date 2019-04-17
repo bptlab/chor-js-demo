@@ -13,8 +13,8 @@ var modeler = new ChoreoModeler({
 
 renderModel(xml);
 
-function renderModel(new_xml) {
-  modeler.setXML(new_xml).then(result => {
+function renderModel(newXml) {
+  modeler.setXML(newXml).then(result => {
     return modeler.displayChoreography({
       // choreoID: '_choreo1'
     });
