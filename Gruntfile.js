@@ -10,13 +10,13 @@ module.exports = function(grunt) {
           debug: true
         },
         transform: [
-          [ 'stringify', {
-            extensions: [ '.bpmn' ]
-          } ],
-          [ 'babelify', {
-            presets: 'es2015',
+          ['stringify', {
+            extensions: ['.bpmn']
+          }],
+          ['babelify', {
+            presets: 'env',
             global: true
-          } ]
+          }]
         ]
       },
       watch: {
@@ -24,12 +24,12 @@ module.exports = function(grunt) {
           watch: true
         },
         files: {
-          'dist/app.js': [ 'app/app.js' ]
+          'dist/app.js': ['app/app.js']
         }
       },
       app: {
         files: {
-          'dist/app.js': [ 'app/app.js' ]
+          'dist/app.js': ['app/app.js']
         }
       }
     },
@@ -102,8 +102,8 @@ module.exports = function(grunt) {
       },
 
       samples: {
-        files: [ 'app/**/*.*' ],
-        tasks: [ 'copy:app' ]
+        files: ['app/**/*.*'],
+        tasks: ['copy:app']
       },
 
       less: {
