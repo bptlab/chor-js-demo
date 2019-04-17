@@ -1,7 +1,5 @@
 import xml from './resources/multiple.bpmn';
-
 import $ from 'jquery';
-
 import ChoreoModeler from 'chor-js/lib/Modeler';
 
 var modeler = new ChoreoModeler({
