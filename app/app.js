@@ -17,22 +17,22 @@ function renderModel(new_xml) {
     modeler.setXML(new_xml).then(result => {
         return modeler.displayChoreography({
             //choreoID: '_choreo1'
-        })
+        });
     }).then(result => {
-        modeler.get('canvas').zoom('fit-viewport')
+        modeler.get('canvas').zoom('fit-viewport');
     }).catch(error => {
-        console.error('something went wrong: ', error)
+        console.error('something went wrong: ', error);
     })
 }
 
 
 function saveSVG(done) {
-    modeler.saveSVG(done)
+    modeler.saveSVG(done);
 }
 
 function saveDiagram(done) {
     modeler.saveXML({format: true}, function (err, xml) {
-        done(err, xml)
+        done(err, xml);
     })
 }
 
@@ -43,7 +43,7 @@ $(function () {
     $('.buttons a').click(function (e) {
         if (!$(this).is('.active')) {
             e.preventDefault();
-            e.stopPropagation()
+            e.stopPropagation();
         }
     });
 
@@ -53,23 +53,23 @@ $(function () {
             link.addClass('active').attr({
                 'href': 'data:application/bpmn20-xml;charset=UTF-8,' + encodedData,
                 'download': name
-            })
+            });
         } else {
-            link.removeClass('active')
+            link.removeClass('active');
         }
     }
 
     var exportArtifacts = debounce(function () {
         saveSVG(function (err, svg) {
-            setEncoded(downloadSvgLink, 'diagram.svg', err ? null : svg)
+            setEncoded(downloadSvgLink, 'diagram.svg', err ? null : svg);
         });
         saveDiagram(function (err, xml) {
-            setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml)
+            setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
         })
     }, 500);
 
     modeler.on('commandStack.changed', exportArtifacts);
-    exportArtifacts()
+    exportArtifacts();
 });
 
 $(function () {
@@ -78,11 +78,11 @@ $(function () {
         var file = document.querySelector('input[type=file]').files[0];
         reader.addEventListener("load", function () {
             const new_xml = reader.result;
-            renderModel(new_xml)
+            renderModel(new_xml);
         }, false);
 
         if (file) {
-            reader.readAsText(file)
+            reader.readAsText(file);
         }
 
     })
@@ -98,9 +98,9 @@ function debounce(fn, timeout) {
 
     return function () {
         if (timer) {
-            clearTimeout(timer)
+            clearTimeout(timer);
         }
 
-        timer = setTimeout(fn, timeout)
+        timer = setTimeout(fn, timeout);
     }
 }
