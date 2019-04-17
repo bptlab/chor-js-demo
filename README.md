@@ -32,7 +32,7 @@ cd..
 git clone https://github.com/jan-ladleif/chor-js-demo.git
 cd chor-js-demo
 npm install
-npm chor-js
+npm link chor-js
 npm run dev
 ```
 
