@@ -28,7 +28,7 @@ cd chor-js
 npm install
 npm link
 
-cd..
+cd ..
 git clone https://github.com/jan-ladleif/chor-js-demo.git
 cd chor-js-demo
 npm install
