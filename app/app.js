@@ -76,8 +76,8 @@ $(function() {
     var reader = new FileReader();
     var file = document.querySelector('input[type=file]').files[0];
     reader.addEventListener('load', function() {
-      const new_xml = reader.result;
-      renderModel(new_xml);
+      const newXml = reader.result;
+      renderModel(newXml);
     }, false);
 
     if (file) {
