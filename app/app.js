@@ -1,4 +1,4 @@
-import xml from './resources/AllChoreoTypes.bpmn';
+import xml from './resources/multiple.bpmn';
 
 import $ from 'jquery';
 
