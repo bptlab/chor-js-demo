@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "build": "grunt build",
+    "serve": "grunt serve",
     "dev": "grunt auto-build"
   },
   "keywords": [

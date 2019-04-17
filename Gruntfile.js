@@ -115,14 +115,25 @@ module.exports = function(grunt) {
         ]
       },
     },
-
     connect: {
       livereload: {
         options: {
           port: 9013,
           livereload: true,
-          hostname: 'localhost',
+          hostname: '0.0.0.0',
           open: true,
+          base: [
+            'dist'
+          ]
+        }
+      },
+      serve: {
+        options: {
+          port: 9013,
+          livereload: false,
+          hostname: '0.0.0.0',
+          open: false,
+          keepalive: true,
           base: [
             'dist'
           ]
@@ -133,7 +144,15 @@ module.exports = function(grunt) {
 
   // tasks
 
-  grunt.registerTask('build', [ 'copy', 'less', 'browserify:app' ]);
+  grunt.registerTask('build', [
+    'copy',
+    'less',
+    'browserify:app'
+  ]);
+
+  grunt.registerTask('serve', [
+    'connect:serve'
+  ]);
 
   grunt.registerTask('auto-build', [
     'copy',
@@ -143,5 +162,7 @@ module.exports = function(grunt) {
     'watch'
   ]);
 
-  grunt.registerTask('default', [ 'build' ]);
+  grunt.registerTask('default', [
+    'build'
+  ]);
 };
