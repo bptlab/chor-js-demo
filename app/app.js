@@ -1,8 +1,8 @@
-import xml from './resources/AllChoreoTypes.bpmn'
+import xml from './resources/AllChoreoTypes.bpmn';
 
-import $ from 'jquery'
+import $ from 'jquery';
 
-import ChoreoModeler from 'chor-js/lib/Modeler'
+import ChoreoModeler from 'chor-js/lib/Modeler';
 
 var modeler = new ChoreoModeler({
     container: '#canvas',
@@ -22,7 +22,7 @@ function renderModel(new_xml) {
         modeler.get('canvas').zoom('fit-viewport');
     }).catch(error => {
         console.error('something went wrong: ', error);
-    })
+    });
 }
 
 
@@ -33,7 +33,7 @@ function saveSVG(done) {
 function saveDiagram(done) {
     modeler.saveXML({format: true}, function (err, xml) {
         done(err, xml);
-    })
+    });
 }
 
 $(function () {
@@ -65,7 +65,7 @@ $(function () {
         });
         saveDiagram(function (err, xml) {
             setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
-        })
+        });
     }, 500);
 
     modeler.on('commandStack.changed', exportArtifacts);
@@ -85,7 +85,7 @@ $(function () {
             reader.readAsText(file);
         }
 
-    })
+    });
 });
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
@@ -102,5 +102,5 @@ function debounce(fn, timeout) {
         }
 
         timer = setTimeout(fn, timeout);
-    }
+    };
 }
