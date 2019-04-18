@@ -4,6 +4,9 @@
   "description": "A demo showcasing the chor-js BPMN 2.0 choreography diagram modeler.",
   "main": "app/app.js",
   "scripts": {
+    "lint": "eslint .",
+    "build": "grunt build",
+    "serve": "grunt serve",
     "dev": "grunt auto-build"
   },
   "keywords": [
@@ -14,17 +17,23 @@
     "url": "https://github.com/jan-ladleif"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jan-ladleif/chor-js-demo"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.1.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-bpmn-io": "^0.7.0",
     "grunt": "~0.4.4",
     "grunt-browserify": "^4.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-connect": "~0.11.2",
-    "grunt-contrib-less": "^2.0.0",
     "grunt-contrib-copy": "~0.8.1",
+    "grunt-contrib-less": "^2.0.0",
     "grunt-contrib-watch": "~0.6.1",
     "load-grunt-tasks": "~3.2.0",
     "stringify": "^3.1.0",
@@ -32,8 +41,7 @@
     "watchify": "^3.10.0"
   },
   "dependencies": {
-    "babel-preset-es2015": "^6.24.1",
-    "chor-js": "^0.2.1",
+    "chor-js": "^0.2.3",
     "inherits": "^2.0.1",
     "jquery": "^3.3.1"
   }

@@ -1,7 +1,5 @@
 import xml from './resources/multiple.bpmn';
-
 import $ from 'jquery';
-
 import ChoreoModeler from 'chor-js/lib/Modeler';
 
 import validate from './lib/validator/Validator';
@@ -13,15 +11,19 @@ var modeler = new ChoreoModeler({
   }
 });
 
-modeler.setXML(xml).then(result => {
-  return modeler.displayChoreography({
-    choreoID: '_choreo1'
+renderModel(xml);
+
+function renderModel(newXml) {
+  modeler.setXML(newXml).then(result => {
+    return modeler.displayChoreography({
+      // choreoID: '_choreo1'
+    });
+  }).then(result => {
+    modeler.get('canvas').zoom('fit-viewport');
+  }).catch(error => {
+    console.error('something went wrong: ', error);
   });
-}).then(result => {
-  modeler.get('canvas').zoom('fit-viewport');
-}).catch(error => {
-  console.error('something went wrong: ', error);
-});
+}
 
 function saveSVG(done) {
   modeler.saveSVG(done);
@@ -73,6 +75,21 @@ $(function() {
   exportArtifacts();
 });
 
+$(function() {
+  $('input').change(function(e) {
+    var reader = new FileReader();
+    var file = document.querySelector('input[type=file]').files[0];
+    reader.addEventListener('load', function() {
+      const newXml = reader.result;
+      renderModel(newXml);
+    }, false);
+
+    if (file) {
+      reader.readAsText(file);
+    }
+
+  });
+});
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
 
