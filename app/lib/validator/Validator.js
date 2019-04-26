@@ -57,12 +57,8 @@ function isInitiating(shape) {
   return false;
 }
 
-export default function validate(viewer) {
-  let overlays = viewer.get('overlays');
-  let canvas = viewer.get('canvas');
-  let elementRegistry = viewer.get('elementRegistry');
-
-  elementRegistry.filter(shape => !shape.hidden && is(shape, 'bpmn:Participant')).forEach(shape => {
+function simpleFlowConstraint(shape, reporter) {
+  if (!shape.hidden && is(shape, 'bpmn:Participant')) {
     let predecessors = getPredecessors(shape);
     console.log(shape, predecessors);
 
@@ -74,14 +70,32 @@ export default function validate(viewer) {
       });
       if (!simpleConstraint) {
         console.warn('add overlay');
-        overlays.add(shape.id, {
-          position: {
-            top: 0,
-            left: 0
-          },
-          html: '<div class="diagram-note">❌</div>'
-        });
+        reporter.report(shape);
       }
     }
-  });
+  }
+}
+
+class Reporter {
+  constructor(overlays) {
+    this.overlays = overlays;
+  }
+  report(shape, level) {
+    this.overlays.add(shape.id, {
+      position: {
+        top: 0,
+        left: 0
+      },
+      html: '<div class="diagram-note">❌</div>'
+    });
+  }
+}
+
+export default function validate(viewer) {
+  let overlays = viewer.get('overlays');
+  let canvas = viewer.get('canvas');
+  let elementRegistry = viewer.get('elementRegistry');
+  const reporter = new Reporter(overlays);
+  const rules = [simpleFlowConstraint];
+  elementRegistry.forEach(shape => rules.forEach(rule => rule(shape, reporter)));
 }
