@@ -1,0 +1,9 @@
+README.md
+Dockerfile
+.gitignore
+
+.DS_Store
+node_modules
+dist
+*.log
+.idea/
