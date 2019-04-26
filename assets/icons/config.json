@@ -29,6 +29,12 @@
       "css": "file-image",
       "code": 61893,
       "src": "fontawesome"
+    },
+    {
+      "uid": "0f6a2573a7b6df911ed199bb63717e27",
+      "css": "github-circled",
+      "code": 61595,
+      "src": "fontawesome"
     }
   ]
 }

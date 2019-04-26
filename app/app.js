@@ -1,4 +1,5 @@
 import xml from './resources/multiple.bpmn';
+import blankXml from './resources/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
 
@@ -83,6 +84,10 @@ $(function() {
     }
 
   });
+});
+
+$('#js-new-diagram').click(function(e) {
+  renderModel(blankXml);
 });
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
