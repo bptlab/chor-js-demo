@@ -76,11 +76,19 @@ function simpleFlowConstraint(shape, reporter) {
   }
 }
 
+function eventBasedGateway(shape, reporter) {
+  if (is(shape, 'bpmn:EventBasedGateway')) {
+    debugger;
+  }
+}
+
 class Reporter {
   constructor(overlays) {
     this.overlays = overlays;
+    this.warnings = [];
   }
-  report(shape, level) {
+  report(shape, level, text) {
+    this.warnings.push({ id: shape.id, shape: shape, level: level, text: text });
     this.overlays.add(shape.id, {
       position: {
         top: 0,
@@ -89,6 +97,10 @@ class Reporter {
       html: '<div class="diagram-note">❌</div>'
     });
   }
+  clearAll() {
+    this.warnings.forEach(warning => this.overlays.remove(warning.id));
+    this.warnings = [];
+  }
 }
 
 export default function validate(viewer) {
@@ -96,6 +108,7 @@ export default function validate(viewer) {
   let canvas = viewer.get('canvas');
   let elementRegistry = viewer.get('elementRegistry');
   const reporter = new Reporter(overlays);
-  const rules = [simpleFlowConstraint];
+  const rules = [simpleFlowConstraint, eventBasedGateway];
   elementRegistry.forEach(shape => rules.forEach(rule => rule(shape, reporter)));
+  return reporter;
 }

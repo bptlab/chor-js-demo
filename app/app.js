@@ -1,4 +1,4 @@
-import xml from './resources/multiple.bpmn';
+import xml from './resources/EventBasedGateway.bpmn';
 import blankXml from './resources/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
