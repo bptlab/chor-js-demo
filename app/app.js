@@ -66,17 +66,18 @@ $(function() {
     });
   }, 500);
 
-  modeler.on('commandStack.changed', exportArtifacts);
-  exportArtifacts();
-});
+  $('#js-new-diagram').click(function(e) {
+    renderModel(blankXml);
+    exportArtifacts();
+  });
 
-$(function() {
   $('input').change(function(e) {
     var reader = new FileReader();
     var file = document.querySelector('input[type=file]').files[0];
     reader.addEventListener('load', function() {
       const newXml = reader.result;
       renderModel(newXml);
+      exportArtifacts();
     }, false);
 
     if (file) {
@@ -84,11 +85,12 @@ $(function() {
     }
 
   });
+
+  modeler.on('commandStack.changed', exportArtifacts);
+  exportArtifacts();
 });
 
-$('#js-new-diagram').click(function(e) {
-  renderModel(blankXml);
-});
+
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
 
