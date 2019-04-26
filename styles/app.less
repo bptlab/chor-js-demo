@@ -6,7 +6,7 @@ body,
 html {
 
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
+  color: rgb(51, 51, 51);
   font-size: 12px;
 
   height: 100%;
@@ -15,9 +15,10 @@ html {
   margin: 0;
 }
 
-a:link {
+a {
   text-decoration: none;
-  color: black;
+  color: rgb(51, 51, 51);
+
 }
 
 .content {
@@ -94,7 +95,7 @@ a:link {
   position: fixed;
   bottom: 20px;
   left: 20px;
-  font-size: 20px;
+  font-size: 28px;
 
   padding: 0;
   margin: 0;
@@ -106,34 +107,56 @@ a:link {
     background: #FAFAFA;
     border: solid 1px #CCC;
     border-radius: 2px;
-    padding: 5px;
     width: 40px;
     height: 40px;
     text-align: center;
-    vertical-align: middle;
 
     > a {
       display: inline-block;
+      margin-bottom: 3px;
+      vertical-align: middle;
     }
 
     > button {
+      padding: 0;
+      margin: 0 0 3px; //3 pixels because of the strange format of the glyphs
+      vertical-align: middle;
       background: none;
       color: inherit;
       border: none;
-      padding: 0;
       font: inherit;
       cursor: pointer;
       outline: inherit;
     }
-  }
 
+  }
 
   a {
     opacity: 0.3;
   }
 
   a.active {
-    opacity: 1.0;
+    opacity: 1;
   }
+
+}
+
+.git-info {
+  position:fixed;
+  bottom: 18px;
+  right: 75px;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  vertical-align: middle;
+
+  > li {
+    font-size: 40px;
+    width: 52px; // Same as bpmn.io logo
+    height: 52px;
+    text-align: center;
+
+  }
+
 
 }
