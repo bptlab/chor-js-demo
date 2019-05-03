@@ -2,6 +2,7 @@ import {
   is
 } from 'bpmn-js/lib/util/ModelUtil';
 
+const level = { warning: 0, error: 1 };
 /**
  * Get connected Choreo Activities
  * @param shape
@@ -83,7 +84,7 @@ function simpleFlowConstraint(shape, reporter) {
       });
       if (!simpleConstraint) {
         console.warn('add overlay');
-        reporter.report(shape);
+        reporter.report(shape, level.error, 'The initiator ' + shape.businessObject.name + ' is not part of the preceding Activity.');
       }
     }
   }
@@ -102,11 +103,11 @@ function eventBasedGateway(shape, reporter) {
     const receivers = following.flatMap(a => a.bandShapes.filter(p => !isInitiating(p)));
     if (!(senders.every((s, i,a) => a[0].businessObject.id === s.businessObject.id) ||
       receivers.every((r,i,a) => a[0].businessObject.id === r.businessObject.id))) {
-      reporter.report(shape,2, 'After an Event Based Gateway all senders or all receivers must be the same');
+      reporter.report(shape,level.error, 'After an Event Based Gateway all senders or all receivers must be the same');
     }
-
   }
 }
+
 
 export default function Reporter(viewer) {
   this.overlays = viewer.get('overlays');
