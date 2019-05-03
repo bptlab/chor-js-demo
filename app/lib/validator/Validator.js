@@ -90,6 +90,12 @@ function simpleFlowConstraint(shape, reporter) {
   }
 }
 
+function intermediateTimerCatchEvent (shape, reporter) {
+    if(is(shape, 'bpmn:IntermediateThrowEvent')){
+      debugger;
+    }
+}
+
 /**
  *
  * @param shape

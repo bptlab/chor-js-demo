@@ -39,10 +39,10 @@ $(function() {
   const reporter = new Reporter(modeler);
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
+  const validateButton = $('#js-validate');
 
-  $('#js-validate').click(e => {
+  validateButton.click(e => {
     if (!$(e.target).hasClass('active')) {
-
       reporter.validateDiagram();
       $(e.target).addClass('active');
     } else {
@@ -101,7 +101,11 @@ $(function() {
 
   modeler.on('commandStack.changed', exportArtifacts);
   exportArtifacts();
-  modeler.on('commandStack.changed', function() {reporter.validateDiagram();});
+  modeler.on('commandStack.changed', function() {
+    if (validateButton.hasClass('active')) {
+      reporter.validateDiagram();
+    }
+  });
 });
 
 
