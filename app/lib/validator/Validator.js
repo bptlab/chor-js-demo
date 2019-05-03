@@ -1,15 +1,14 @@
-import {
-  is
-} from 'bpmn-js/lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil';
 
 const level = { warning: 0, error: 1 };
 /**
  * Get connected Choreo Activities
  * @param shape
  * @param direction 'incoming' || 'outgoing'
+ * @param hasRequiredType {function}
  * @returns {Array}
  */
-function getConnected(shape, direction) {
+function getConnectedElements(shape, direction, hasRequiredType) {
   if (direction !== 'incoming' && direction !== 'outgoing') {
     // This would currently reload the page due to debounce perhaps?
     throw new Error('Illegal Argument: ' + direction);
@@ -34,7 +33,7 @@ function getConnected(shape, direction) {
     visited.push(nodeShape);
 
     // add to connected if we have reached an activity
-    if (shape !== nodeShape && is(nodeShape, 'bpmn:ChoreographyActivity')) {
+    if (shape !== nodeShape && hasRequiredType(nodeShape)) {
       connected.push(nodeShape);
       return;
     }
@@ -71,10 +70,16 @@ function isInitiating(shape) {
   return false;
 }
 
+function isChoreoActivity(shape) {
+  return is(shape, 'bpmn:ChoreographyActivity');
+}
+function isAnyNodeType(shape) {
+  return is(shape, 'bpmn:FlowNode');
+}
+
 function simpleFlowConstraint(shape, reporter) {
   if (!shape.hidden && is(shape, 'bpmn:Participant')) {
-    let predecessors = getConnected(shape, 'incoming');
-    console.log(shape, predecessors);
+    let predecessors = getConnectedElements(shape, 'incoming', isChoreoActivity);
 
     if (isInitiating(shape)) {
       let participant = getParticipants(shape)[0];
@@ -90,10 +95,17 @@ function simpleFlowConstraint(shape, reporter) {
   }
 }
 
-function intermediateTimerCatchEvent (shape, reporter) {
-    if(is(shape, 'bpmn:IntermediateThrowEvent')){
-      debugger;
-    }
+function intermediateTimerCatchEvent(shape, reporter) {
+  function isInterCatchTimerEvent(shape) {
+    return is(shape, 'bpmn:IntermediateCatchEvent')
+    && shape.businessObject.eventDefinitions[0].$type === 'bpmn:TimerEventDefinition';
+  }
+  if (isInterCatchTimerEvent(shape)) {
+    const predecessors = getConnectedElements(shape, 'incoming', isAnyNodeType);
+    const successor = getConnectedElements(shape,'outgoing', isAnyNodeType);
+    successor.every(s => !is(s, 'bpmn:EndEvent'));
+    // TODO: incomplete
+  }
 }
 
 /**
@@ -103,7 +115,7 @@ function intermediateTimerCatchEvent (shape, reporter) {
  */
 function eventBasedGateway(shape, reporter) {
   if (is(shape, 'bpmn:EventBasedGateway')) {
-    const following = getConnected(shape, 'outgoing');
+    const following = getConnectedElements(shape, 'outgoing', isChoreoActivity);
     // TODO: Using flatmap would require a polyfill for MS-Edge. We should clean up the babel part and take care of it that way
     const senders = following.flatMap(a => a.bandShapes.filter(p => isInitiating(p)));
     const receivers = following.flatMap(a => a.bandShapes.filter(p => !isInitiating(p)));
@@ -124,7 +136,7 @@ export default function Reporter(viewer) {
 
 Reporter.prototype.validateDiagram = function() {
   this.clearAll();
-  const rules = [simpleFlowConstraint, eventBasedGateway];
+  const rules = [simpleFlowConstraint, eventBasedGateway, intermediateTimerCatchEvent];
   this.elementRegistry.forEach(shape => rules.forEach(rule => rule(shape, this)));
 };
 
