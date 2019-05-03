@@ -2,8 +2,7 @@ import xml from './resources/EventBasedGateway.bpmn';
 import blankXml from './resources/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
-
-import validate from './lib/validator/Validator';
+import Reporter from './lib/validator/Validator.js';
 
 var modeler = new ChoreoModeler({
   container: '#canvas',
@@ -37,11 +36,19 @@ function saveDiagram(done) {
 }
 
 $(function() {
+  const reporter = new Reporter(modeler);
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
 
   $('#js-validate').click(e => {
-    validate(modeler);
+    if (!$(e.target).hasClass('active')) {
+
+      reporter.validateDiagram();
+      $(e.target).addClass('active');
+    } else {
+      reporter.clearAll();
+      $(e.target).removeClass('active');
+    }
   });
 
   $('.buttons a').click(function(e) {
@@ -94,6 +101,7 @@ $(function() {
 
   modeler.on('commandStack.changed', exportArtifacts);
   exportArtifacts();
+  modeler.on('commandStack.changed', function() {reporter.validateDiagram();});
 });
 
 

@@ -108,49 +108,45 @@ function eventBasedGateway(shape, reporter) {
   }
 }
 
-class Reporter {
-  constructor(overlays) {
-    this.overlays = overlays;
-    this.shapeWarnings = {};
+export default function Reporter(viewer) {
+  this.overlays = viewer.get('overlays');
+  this.elementRegistry = viewer.get('elementRegistry');
+  this.shapeWarnings = {};
+  this.overlayIDs = [];
+}
 
+Reporter.prototype.validateDiagram = function() {
+  this.clearAll();
+  const rules = [simpleFlowConstraint, eventBasedGateway];
+  this.elementRegistry.forEach(shape => rules.forEach(rule => rule(shape, this)));
+};
+
+Reporter.prototype.addWarningToShape = function(shape, level, text) {
+  if (this.shapeWarnings[shape.id]) {
+    this.shapeWarnings[shape.id].push({ level: level, text: text });
+  } else {
+    this.shapeWarnings[shape.id] = [{ level: level, text: text }];
   }
+};
 
-  addWarningToShape(shape, level, text) {
-    if (this.shapeWarnings[shape.id]) {
-      this.shapeWarnings[shape.id].push({ level: level, text: text });
-    } else {
-      this.shapeWarnings[shape.id] = [{ level: level, text: text }];
-    }
-  }
-
-  report(shape, level, text) {
-    this.addWarningToShape(shape, level, text);
-    const annotationCount = this.shapeWarnings[shape.id].length;
-    const infoText = this.shapeWarnings[shape.id].map(a => a.text).reduce((p,c)=> p + '\n' + c);
-    console.log(infoText)
-    this.overlays.add(shape.id, {
-      position: {
-        top: -7,
-        left: -7
-      },
-      html: '<div class="validation-error">' +
+Reporter.prototype.report = function(shape, level, text) {
+  this.addWarningToShape(shape, level, text);
+  const annotationCount = this.shapeWarnings[shape.id].length;
+  const infoText = this.shapeWarnings[shape.id].map(a => a.text).reduce((p,c)=> p + '\n' + c);
+  const newOverlayId = this.overlays.add(shape.id, {
+    position: {
+      top: -7,
+      left: -7
+    },
+    html: '<div class="validation-error">' +
         '<div class="validation-count">'+ annotationCount +'</div>' +
         '<div class="validation-info">' + infoText +'</div>' +
         '</div>'
-    });
-  }
-  clearAll() {
-    Object.keys(this.shapeWarnings).forEach(id => this.overlays.remove(id));
-    this.shapeWarnings = {};
-  }
-}
+  });
+  this.overlayIDs.push(newOverlayId);
+};
+Reporter.prototype.clearAll = function() {
+  this.overlayIDs.forEach(id => this.overlays.remove(id));
+  this.shapeWarnings = {};
+};
 
-export default function validate(viewer) {
-  let overlays = viewer.get('overlays');
-  let canvas = viewer.get('canvas');
-  let elementRegistry = viewer.get('elementRegistry');
-  const reporter = new Reporter(overlays);
-  const rules = [simpleFlowConstraint, eventBasedGateway];
-  elementRegistry.forEach(shape => rules.forEach(rule => rule(shape, reporter)));
-  return reporter;
-}
