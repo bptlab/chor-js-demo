@@ -160,3 +160,38 @@ a {
 
 
 }
+.validation-error {
+  background-color: #BD2828;
+  border-width: 2px;
+  border-color: #FFFFFF;
+  border-style: solid;
+  border-radius: 50%;
+  padding: 2px;
+  width: 20px;
+  height: 20px;
+
+  > .validation-info {
+    width: 100px;
+    display: none;
+    background: #FAFAFA;
+    border: solid 1px #CCC;
+    border-radius: 2px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+
+}
+.validation-error:hover > .validation-info{
+  display: block;
+}
+
+.validation-count {
+  position: absolute;
+  font-weight: bold;
+  left: 2px;
+  top: -4px;
+  color: #BD2828;
+  text-shadow: 1px 1px 1px #FFFFFF, -1px -1px 1px #FFFFFF, 1px -1px 1px #FFFFFF, -1px 1px 1px #FFFFFF;
+}

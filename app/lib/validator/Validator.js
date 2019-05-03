@@ -104,28 +104,44 @@ function eventBasedGateway(shape, reporter) {
       receivers.every((r,i,a) => a[0].businessObject.id === r.businessObject.id))) {
       reporter.report(shape,2, 'After an Event Based Gateway all senders or all receivers must be the same');
     }
-    debugger;
+
   }
 }
 
 class Reporter {
   constructor(overlays) {
     this.overlays = overlays;
-    this.warnings = [];
+    this.shapeWarnings = {};
+
   }
+
+  addWarningToShape(shape, level, text) {
+    if (this.shapeWarnings[shape.id]) {
+      this.shapeWarnings[shape.id].push({ level: level, text: text });
+    } else {
+      this.shapeWarnings[shape.id] = [{ level: level, text: text }];
+    }
+  }
+
   report(shape, level, text) {
-    this.warnings.push({ id: shape.id, shape: shape, level: level, text: text });
+    this.addWarningToShape(shape, level, text);
+    const annotationCount = this.shapeWarnings[shape.id].length;
+    const infoText = this.shapeWarnings[shape.id].map(a => a.text).reduce((p,c)=> p + '\n' + c);
+    console.log(infoText)
     this.overlays.add(shape.id, {
       position: {
-        top: 0,
-        left: 0
+        top: -7,
+        left: -7
       },
-      html: '<div title="This is my tooltip" class="diagram-note" >❌ </div>'
+      html: '<div class="validation-error">' +
+        '<div class="validation-count">'+ annotationCount +'</div>' +
+        '<div class="validation-info">' + infoText +'</div>' +
+        '</div>'
     });
   }
   clearAll() {
-    this.warnings.forEach(warning => this.overlays.remove(warning.id));
-    this.warnings = [];
+    Object.keys(this.shapeWarnings).forEach(id => this.overlays.remove(id));
+    this.shapeWarnings = {};
   }
 }
 
