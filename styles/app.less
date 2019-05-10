@@ -164,8 +164,7 @@ a {
 
 
 }
-.validation-error {
-  background-color: #BD2828;
+.validation-annotation {
   border-width: 2px;
   border-color: #FFFFFF;
   border-style: solid;
@@ -174,28 +173,56 @@ a {
   width: 20px;
   height: 20px;
 
-  > .validation-info {
-    width: 100px;
-    display: none;
-    background: #FAFAFA;
-    border: solid 1px #CCC;
-    border-radius: 2px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
+
+  &:hover > .validation-info{
+    display: block;
   }
 
+  .validation-info {
+    display: none;
+    background: #FAFAFA;
+    position: absolute;
+    top: 0;
+    right: 0;
+    list-style: none;
+    padding-left: 0;
+    min-width: 180px;
+    max-height: 300px;
+    overflow: scroll;
+
+    li {
+      padding: 4px;
+    }
+
+    .li-error {
+      border: 1px solid #BD2828;
+    }
+
+    .li-warning {
+      border: 1px solid yellow;
+    }
+  }
+
+  .validation-count {
+    position: absolute;
+    font-weight: bold;
+    color: darkgrey;
+    left: 2px;
+    top: -4px;
+    text-shadow: 1px 1px 1px #FFFFFF, -1px -1px 1px #FFFFFF, 1px -1px 1px #FFFFFF, -1px 1px 1px #FFFFFF;
+  }
 
 }
-.validation-error:hover > .validation-info{
-  display: block;
+
+
+
+.val-error{
+  .validation-annotation;
+  background-color: #BD2828;
 }
 
-.validation-count {
-  position: absolute;
-  font-weight: bold;
-  left: 2px;
-  top: -4px;
-  color: #BD2828;
-  text-shadow: 1px 1px 1px #FFFFFF, -1px -1px 1px #FFFFFF, 1px -1px 1px #FFFFFF, -1px 1px 1px #FFFFFF;
+.val-warning {
+  .validation-annotation;
+  background-color: yellow;
 }
+

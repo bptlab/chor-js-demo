@@ -1,4 +1,5 @@
 import { is } from 'bpmn-js/lib/util/ModelUtil';
+import { heightOfTopBands } from 'chor-js/lib/util/BandUtil';
 
 const level = { warning: 0, error: 1 };
 /**
@@ -79,10 +80,6 @@ function getInitiatingParticipants(shapes) {
 function isChoreoActivity(shape) {
   return is(shape, 'bpmn:ChoreographyActivity');
 }
-function isAnyNodeType(shape) {
-  return is(shape, 'bpmn:FlowNode');
-}
-
 
 function simpleFlowConstraint(shape, reporter) {
   if (is(shape, 'bpmn:Participant')) {
@@ -121,6 +118,7 @@ function intermediateTimerCatchEvent(shape, reporter) {
     const followingActivities = getConnectedElements(shape, 'outgoing', isChoreoActivity);
     if (!getInitiatingParticipants(followingActivities)
       .every(part => previousActivities.every(act => participatesIn(part.businessObject, act)))) {
+      // Currently it is not possible to distinguish between relative and absolute timers, thus this waring is not precise
       reporter.report(shape,level.warning, 'For relative timers: Only the Participants involved in the Choreography ' +
         'Activity that immediately precedes the Event would know the time. The sender of the Choreography Activity ' +
         'that immediately follows the timer MUST be involved ' +
@@ -130,6 +128,8 @@ function intermediateTimerCatchEvent(shape, reporter) {
 
   }
 }
+
+
 
 /**
  *
@@ -153,7 +153,8 @@ function eventBasedGateway(shape, reporter) {
 export default function Reporter(viewer) {
   this.overlays = viewer.get('overlays');
   this.elementRegistry = viewer.get('elementRegistry');
-  this.shapeWarnings = {};
+  this.annotations = [];
+  this.shapeAnnotations = {};
   this.overlayIDs = [];
 }
 
@@ -161,34 +162,64 @@ Reporter.prototype.validateDiagram = function() {
   this.clearAll();
   const rules = [simpleFlowConstraint, eventBasedGateway, intermediateTimerCatchEvent];
   this.elementRegistry.forEach(shape => rules.forEach(rule => rule(shape, this)));
+  this.showAnnotations();
 };
 
-Reporter.prototype.addWarningToShape = function(shape, level, text) {
-  if (this.shapeWarnings[shape.id]) {
-    this.shapeWarnings[shape.id].push({ level: level, text: text });
+Reporter.prototype.addAnnotationToShape = function(annotation) {
+  if (this.shapeAnnotations[annotation.shape.id]) {
+    this.shapeAnnotations[annotation.shape.id].push(annotation);
   } else {
-    this.shapeWarnings[shape.id] = [{ level: level, text: text }];
+    this.shapeAnnotations[annotation.shape.id] = [annotation];
   }
 };
 
 Reporter.prototype.report = function(shape, level, text) {
-  this.addWarningToShape(shape, level, text);
-  const annotationCount = this.shapeWarnings[shape.id].length;
-  const infoText = this.shapeWarnings[shape.id].map(a => a.text).reduce((p,c)=> p + '\n' + c);
+  this.annotations.push({ level: level, text: text, shape: shape });
+};
+
+Reporter.prototype.showAnnotations = function() {
+  function findVisibleParent(shape) {
+    while (shape.hidden) {
+      shape = shape.parent;
+    }
+    return shape;
+  }
+  this.annotations.forEach(a => this.addAnnotationToShape(
+    { level: a.level, text: a.text, shape: findVisibleParent(a.shape) }));
+  Object.values(this.shapeAnnotations).forEach(annotations => this.displayOnShape(annotations));
+
+};
+
+Reporter.prototype.displayOnShape = function(annotations) {
+  const shape = annotations[0].shape;
+  const annotationCount = annotations.length;
+  const annotationType = annotations.reduce((acc,warn)=> acc + warn.level, 0)/annotationCount > 0 ? 'error':'warning';
+
+  function createInfoText(annotations) {
+    return annotations.map(a => {
+      const type = a.level > 0 ? 'error':'warning';
+      return '<li class=li-'+type+'>'+a.text+'</li>';
+    }).reduce((p,c)=> p + '\n' + c, '');
+  }
+  const topOffset = isChoreoActivity(shape)? heightOfTopBands(shape) : -7;
+  const infoText = createInfoText(annotations);
   const newOverlayId = this.overlays.add(shape.id, {
     position: {
-      top: -7,
+      top: topOffset,
       left: -7
     },
-    html: '<div class="validation-error">' +
-        '<div class="validation-count">'+ annotationCount +'</div>' +
-        '<div class="validation-info">' + infoText +'</div>' +
-        '</div>'
+
+    html: '<div class="val-'+annotationType+'">' +
+      '<div class="validation-count">'+ annotationCount +'</div>' +
+      '<ul class="validation-info">' + infoText +'</ul>' +
+      '</div>'
   });
   this.overlayIDs.push(newOverlayId);
 };
+
 Reporter.prototype.clearAll = function() {
   this.overlayIDs.forEach(id => this.overlays.remove(id));
-  this.shapeWarnings = {};
+  this.shapeAnnotations = {};
+  this.annotations = [];
 };
 
