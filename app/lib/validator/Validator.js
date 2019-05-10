@@ -90,7 +90,6 @@ function simpleFlowConstraint(shape, reporter) {
         simpleConstraint = simpleConstraint && getParticipants(activityShape).includes(participant);
       });
       if (!simpleConstraint) {
-        console.warn('add overlay');
         reporter.report(shape, level.error, 'The initiator ' + shape.businessObject.name + ' is not part of the preceding Activity.');
       }
     }
@@ -132,6 +131,27 @@ function intermediateTimerCatchEvent(shape, reporter) {
  * @param shape
  * @param reporter {Reporter}
  */
+function subChoreoParticipants(shape, reporter) {
+  if (is(shape, 'bpmn:SubChoreography')) {
+
+    const allParticipants = new Set(shape.children.filter(isChoreoActivity)
+      .flatMap(act => act.bandShapes).map(bs => bs.businessObject));
+    const shownParticipants = new Set(shape.bandShapes.map(bs => bs.businessObject));
+    const notShown = Array.from(allParticipants)
+      .filter(part => !shownParticipants.has(part)).map(bo => bo.name);
+    if (notShown.length > 0) {
+      reporter.report(shape,level.warning, 'Following participants are not shown as bands: '+ notShown.join(', '));
+    }
+
+  }
+}
+
+
+/**
+ *
+ * @param shape
+ * @param reporter {Reporter}
+ */
 function participantNameReuse(shape, reporter) {
   // Check if it is a band shape
   if (shape.diBand) {
@@ -140,7 +160,7 @@ function participantNameReuse(shape, reporter) {
     const isUnique = reporter.elementRegistry.filter(elem => elem.diBand)
       .every(elem => elem.businessObject.name !== name || elem.businessObject.id === id);
     if (!isUnique) {
-      reporter.report(shape, 0, 'Multiple different Particiapnts with same name:' + name +
+      reporter.report(shape, 0, 'Multiple different participants with same name: ' + name +
         '. Names should be unique for clarity');
     }
   }
@@ -174,7 +194,8 @@ export default function Reporter(viewer) {
 
 Reporter.prototype.validateDiagram = function() {
   this.clearAll();
-  const rules = [simpleFlowConstraint, eventBasedGateway, intermediateTimerCatchEvent, participantNameReuse];
+  const rules = [simpleFlowConstraint, eventBasedGateway, intermediateTimerCatchEvent,
+    participantNameReuse, subChoreoParticipants];
   this.elementRegistry.forEach(shape => rules.forEach(rule => rule(shape, this)));
   this.showAnnotations();
 };
@@ -222,7 +243,7 @@ Reporter.prototype.displayOnShape = function(annotations) {
   const newOverlayId = this.overlays.add(shape.id, {
     position: {
       top: topOffset,
-      left: -7
+      left: -12
     },
 
     html: '<div class="val-' + annotationType + '">' +

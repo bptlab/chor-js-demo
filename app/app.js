@@ -1,4 +1,4 @@
-import xml from './resources/subchoreo_val.bpmn';
+import xml from './resources/ManyErrorsAndWarnings.bpmn';
 import blankXml from './resources/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
