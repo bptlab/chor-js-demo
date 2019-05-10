@@ -63,11 +63,17 @@ function getParticipants(shape) {
   return [];
 }
 
+
 function isInitiating(shape) {
   if (is(shape, 'bpmn:Participant')) {
     return !shape.diBand.participantBandKind.endsWith('non_initiating');
   }
   return false;
+}
+
+function getInitiatingParticipants(shapes) {
+  return shapes.filter(s => isChoreoActivity(s))
+    .flatMap(act => act.bandShapes).filter(part => isInitiating(part));
 }
 
 function isChoreoActivity(shape) {
@@ -77,8 +83,9 @@ function isAnyNodeType(shape) {
   return is(shape, 'bpmn:FlowNode');
 }
 
+
 function simpleFlowConstraint(shape, reporter) {
-  if (!shape.hidden && is(shape, 'bpmn:Participant')) {
+  if (is(shape, 'bpmn:Participant')) {
     let predecessors = getConnectedElements(shape, 'incoming', isChoreoActivity);
 
     if (isInitiating(shape)) {
@@ -95,16 +102,32 @@ function simpleFlowConstraint(shape, reporter) {
   }
 }
 
+function participatesIn(participant, shape) {
+  return getParticipants(shape).includes(participant);
+}
+
+/**
+ *
+ * @param shape
+ * @param reporter {Reporter}
+ */
 function intermediateTimerCatchEvent(shape, reporter) {
   function isInterCatchTimerEvent(shape) {
     return is(shape, 'bpmn:IntermediateCatchEvent')
     && shape.businessObject.eventDefinitions[0].$type === 'bpmn:TimerEventDefinition';
   }
   if (isInterCatchTimerEvent(shape)) {
-    const predecessors = getConnectedElements(shape, 'incoming', isAnyNodeType);
-    const successor = getConnectedElements(shape,'outgoing', isAnyNodeType);
-    successor.every(s => !is(s, 'bpmn:EndEvent'));
-    // TODO: incomplete
+    const previousActivities = getConnectedElements(shape, 'incoming', isChoreoActivity);
+    const followingActivities = getConnectedElements(shape, 'outgoing', isChoreoActivity);
+    if (!getInitiatingParticipants(followingActivities)
+      .every(part => previousActivities.every(act => participatesIn(part.businessObject, act)))) {
+      reporter.report(shape,level.warning, 'For relative timers: Only the Participants involved in the Choreography ' +
+        'Activity that immediately precedes the Event would know the time. The sender of the Choreography Activity ' +
+        'that immediately follows the timer MUST be involved ' +
+        'in the Choreography Activity that immediately precedes the timer.');
+    }
+
+
   }
 }
 
