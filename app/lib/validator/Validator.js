@@ -4,10 +4,10 @@ import { heightOfTopBands } from 'chor-js/lib/util/BandUtil';
 const level = { warning: 0, error: 1 };
 
 /**
- * Get connected Choreo Activities
- * @param shape
- * @param direction 'incoming' || 'outgoing'
- * @param hasRequiredType {function}
+ * Get connected elements
+ * @param shape The shape to start from
+ * @param direction 'incoming' || 'outgoing' if to check connected shapes from incoming or outgoing
+ * @param hasRequiredType {function} function to determine type of connected elements
  * @returns {Array}
  */
 function getConnectedElements(shape, direction, hasRequiredType) {
@@ -79,6 +79,15 @@ function isChoreoActivity(shape) {
   return is(shape, 'bpmn:ChoreographyActivity');
 }
 
+function participatesIn(participant, shape) {
+  return getParticipants(shape).includes(participant);
+}
+
+/**
+ * Checks the basic Choreo flow constraint. Compare 11.5.6 The Sequencing of Activities
+ * @param shape
+ * @param reporter
+ */
 function simpleFlowConstraint(shape, reporter) {
   if (is(shape, 'bpmn:Participant')) {
     let predecessors = getConnectedElements(shape, 'incoming', isChoreoActivity);
@@ -96,12 +105,10 @@ function simpleFlowConstraint(shape, reporter) {
   }
 }
 
-function participatesIn(participant, shape) {
-  return getParticipants(shape).includes(participant);
-}
+
 
 /**
- *
+ * Checks that timer can be used as relative timer. Compare 11.6.2 Intermediate Events
  * @param shape
  * @param reporter {Reporter}
  */
@@ -127,7 +134,7 @@ function intermediateTimerCatchEvent(shape, reporter) {
 }
 
 /**
- *
+ * Checks if all participants in a subchoreo are shown as bands on the subchoreo.
  * @param shape
  * @param reporter {Reporter}
  */
@@ -148,7 +155,7 @@ function subChoreoParticipants(shape, reporter) {
 
 
 /**
- *
+ * Checks if a name is used for different participants.
  * @param shape
  * @param reporter {Reporter}
  */
@@ -167,7 +174,7 @@ function participantNameReuse(shape, reporter) {
 }
 
 /**
- *
+ * Checks rules for event-based gateways. See chapter 11.7.2
  * @param shape
  * @param reporter {Reporter}
  */
@@ -187,8 +194,8 @@ function eventBasedGateway(shape, reporter) {
 export default function Reporter(viewer) {
   this.overlays = viewer.get('overlays');
   this.elementRegistry = viewer.get('elementRegistry');
-  this.annotations = [];
-  this.shapeAnnotations = {};
+  this.annotations = []; // List of all annotations
+  this.shapeAnnotations = {}; // Mapping from shape id to annotations
   this.overlayIDs = [];
 }
 
@@ -226,7 +233,12 @@ Reporter.prototype.showAnnotations = function() {
 
 };
 
+/**
+ * Display a list of annotations on their shape. The shape must be the same for all annotations
+ * @param annotations {Array}
+ */
 Reporter.prototype.displayOnShape = function(annotations) {
+  annotations = annotations.sort((a,b) => a.level + b.level);
   const shape = annotations[0].shape;
   const annotationCount = annotations.length;
   const annotationType = annotations.reduce((acc, warn) => acc + warn.level, 0) / annotationCount > 0 ? 'error' : 'warning';
