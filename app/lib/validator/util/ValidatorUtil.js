@@ -68,8 +68,8 @@ export function isInitiating(shape) {
 }
 
 export function getInitiatingParticipants(shapes) {
-  return shapes.filter(s => isChoreoActivity(s))
-    .flatMap(act => act.bandShapes).filter(part => isInitiating(part));
+  return flat(shapes.filter(s => isChoreoActivity(s))
+    .map(act => act.bandShapes)).filter(part => isInitiating(part));
 }
 
 export function isChoreoActivity(shape) {
@@ -78,4 +78,15 @@ export function isChoreoActivity(shape) {
 
 export function participatesIn(participant, shape) {
   return getParticipants(shape).includes(participant);
+}
+
+/**
+ * Stand-in function for flattening a array of depth 1.
+ * @param {Array} array
+ * @returns {Array}
+ */
+export function flat(array) {
+  // Todo: Replace this with the real flat or flatMap when we have an updated
+  // build pipeline which allows polyfills.
+  return array.reduce((acc, value) => acc.concat(value), []);
 }

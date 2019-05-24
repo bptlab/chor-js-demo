@@ -1,6 +1,7 @@
 import { is } from 'bpmn-js/lib/util/ModelUtil';
 
 import {
+  flat,
   isChoreoActivity
 } from '../util/ValidatorUtil';
 
@@ -12,8 +13,8 @@ import {
 export default function subChoreoParticipantsConstraint(shape, reporter) {
   if (is(shape, 'bpmn:SubChoreography')) {
 
-    const allParticipants = new Set(shape.children.filter(isChoreoActivity)
-      .flatMap(act => act.bandShapes).map(bs => bs.businessObject));
+    const allParticipants = new Set(flat(shape.children.filter(isChoreoActivity)
+      .map(act => act.bandShapes)).map(bs => bs.businessObject));
     const shownParticipants = new Set(shape.bandShapes.map(bs => bs.businessObject));
     const notShown = Array.from(allParticipants)
       .filter(part => !shownParticipants.has(part)).map(bo => bo.name);
