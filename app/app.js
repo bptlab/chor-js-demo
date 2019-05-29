@@ -13,6 +13,7 @@ var modeler = new ChoreoModeler({
 
 renderModel(xml);
 
+
 function renderModel(newXml) {
   modeler.setXML(newXml).then(result => {
     return modeler.displayChoreography({
@@ -40,14 +41,17 @@ $(function() {
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
   const validateButton = $('#js-validate');
+  let isValidating = false;
 
   validateButton.click(e => {
-    if (!$(e.target).hasClass('active')) {
+    if (!isValidating) {
+      isValidating = true;
       reporter.validateDiagram();
-      $(e.target).addClass('active');
+      $(e.target.parentElement).addClass('active');
     } else {
+      isValidating = false;
       reporter.clearAll();
-      $(e.target).removeClass('active');
+      $(e.target.parentElement).removeClass('active');
     }
   });
 
@@ -99,10 +103,16 @@ $(function() {
 
   });
 
-  modeler.on('commandStack.changed', exportArtifacts);
+
   exportArtifacts();
-  modeler.on('commandStack.changed', function() {
-    if (validateButton.hasClass('active')) {
+  modeler.on('commandStack.changed', exportArtifacts);
+  modeler.on('commandStack.changed',function() {
+    if (isValidating) {
+      reporter.validateDiagram();
+    }
+  });
+  modeler.on('import.render.complete', function() {
+    if (isValidating) {
       reporter.validateDiagram();
     }
   });
