@@ -48,10 +48,13 @@ $(function() {
       isValidating = true;
       reporter.validateDiagram();
       $(e.target.parentElement).addClass('active');
+      $(e.target).prop('title', 'Disable checking');
     } else {
       isValidating = false;
       reporter.clearAll();
       $(e.target.parentElement).removeClass('active');
+      $(e.target).prop('title', 'Check diagram for problems');
+
     }
   });
 
