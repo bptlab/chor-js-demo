@@ -8,20 +8,26 @@ import eventBasedGatewayConstraint from './constraints/EventBasedGatewayConstrai
 import participantNameConstraint from './constraints/ParticipantNameConstraint';
 import simpleFlowConstraint from './constraints/SimpleFlowConstraint';
 import subChoreoParticipantsConstraint from './constraints/SubChoreoParticipantsConstraint';
-import timerEventConstraint from './constraints/TimerEventConstraint';
+// import timerEventConstraint from './constraints/TimerEventConstraint';
 
 const CONSTRAINTS = [
   eventBasedGatewayConstraint,
   participantNameConstraint,
   simpleFlowConstraint,
-  subChoreoParticipantsConstraint,
-  timerEventConstraint
+  subChoreoParticipantsConstraint
+  // We do not check the timer constraint right now because of reasons stated in the code there.
+  // timerEventConstraint
 ];
 
 const LEVEL = {
   WARNING: 0,
   ERROR: 1
 };
+
+const LEVEL_STRING = [
+  'warning',
+  'error'
+];
 
 export default function Reporter(viewer) {
   this.overlays = viewer.get('overlays');
@@ -37,11 +43,11 @@ Reporter.prototype.validateDiagram = function() {
   this.showAnnotations();
 };
 
-Reporter.prototype.addAnnotationToShape = function(annotation) {
-  if (this.shapeAnnotations[annotation.shape.id]) {
-    this.shapeAnnotations[annotation.shape.id].push(annotation);
+Reporter.prototype.addAnnotationToShape = function(shape, annotation) {
+  if (this.shapeAnnotations[shape.id]) {
+    this.shapeAnnotations[shape.id].push(annotation);
   } else {
-    this.shapeAnnotations[annotation.shape.id] = [ annotation ];
+    this.shapeAnnotations[shape.id] = [ annotation ];
   }
 };
 
@@ -65,41 +71,69 @@ Reporter.prototype.showAnnotations = function() {
     return shape;
   }
 
-  this.annotations.forEach(a => this.addAnnotationToShape(
-    { level: a.level, text: a.text, shape: findVisibleParent(a.shape) }));
-  Object.values(this.shapeAnnotations).forEach(annotations => this.displayOnShape(annotations));
-
+  this.annotations.forEach(annotation => this.addAnnotationToShape(
+    findVisibleParent(annotation.shape),
+    annotation
+  ));
+  Object.keys(this.shapeAnnotations).forEach(id => {
+    const shape = this.elementRegistry.get(id);
+    this.displayOnShape(shape, this.shapeAnnotations[id]);
+  });
 };
 
 /**
- * Display a list of annotations on their shape. The shape must be the same for all annotations
+ * Display a list of annotations on their shape.
  * @param annotations {Array}
  */
-Reporter.prototype.displayOnShape = function(annotations) {
-  annotations = annotations.sort((a,b) => a.level + b.level);
-  const shape = annotations[0].shape;
-  const annotationCount = annotations.length;
-  const annotationType = annotations.reduce((acc, warn) => acc + warn.level, 0) / annotationCount > 0 ? 'error' : 'warning';
-
-  function createInfoText(annotations) {
-    return annotations.map(a => {
-      const type = a.level > 0 ? 'error' : 'warning';
-      return '<li class=li-' + type + '>' + a.text + '</li>';
-    }).reduce((p, c) => p + '\n' + c, '');
-  }
+Reporter.prototype.displayOnShape = function(shape, annotations) {
+  let childAnnotations = annotations.filter(annotation => annotation.shape !== shape);
+  let parentAnnotations = annotations
+    .filter(annotation => annotation.shape === shape)
+    .sort((a,b) => b.level - a.level);
 
   const topOffset = isChoreoActivity(shape) ? heightOfTopBands(shape) : -7;
-  const infoText = createInfoText(annotations);
+  const level = Math.max(...annotations.map(annotation => annotation.level));
+  const count = annotations.length;
+
+  let infoText = '';
+  parentAnnotations.forEach(annotation => {
+    infoText += '<li class="li-' + LEVEL_STRING[annotation.level] + '">' + annotation.text + '</li>';
+  });
+  if (childAnnotations.length > 0) {
+    let errorCount = childAnnotations.filter(annotation => annotation.level === LEVEL.ERROR).length;
+    let warningCount = childAnnotations.filter(annotation => annotation.level === LEVEL.WARNING).length;
+    infoText += '<li class="li-note">';
+    if (errorCount > 0) {
+      infoText += '<b>' + errorCount + '</b> nested error';
+      if (errorCount > 1) {
+        infoText += 's';
+      }
+      if (warningCount > 0) {
+        infoText += ',';
+      }
+    }
+    if (warningCount > 0) {
+      infoText += warningCount + ' nested warning';
+      if (warningCount > 1) {
+        infoText += 's';
+      }
+    }
+    infoText += '</li>';
+  }
+
+  let html = '<div class="val-' + LEVEL_STRING[level] + '">';
+  if (count > 1) {
+    html += '<div class="validation-count">' + count + '</div>';
+  }
+  html += '<ul class="validation-info">' + infoText + '</ul>';
+  html += '</div>';
+
   const newOverlayId = this.overlays.add(shape.id, {
     position: {
       top: topOffset,
-      left: -12
+      left: shape.width - 12
     },
-
-    html: '<div class="val-' + annotationType + '">' +
-      '<div class="validation-count">' + annotationCount + '</div>' +
-      '<ul class="validation-info">' + infoText + '</ul>' +
-      '</div>'
+    html: html
   });
   this.overlayIDs.push(newOverlayId);
 };

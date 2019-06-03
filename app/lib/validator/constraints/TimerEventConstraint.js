@@ -24,6 +24,7 @@ export default function timerEventConstraint(shape, reporter) {
     if (!getInitiatingParticipants(followingActivities)
       .every(part => previousActivities.every(act => participatesIn(part.businessObject, act)))) {
       // Currently it is not possible to distinguish between relative and absolute timers, thus this waring is not precise
+      // Also TODO: Formulate the warning somewhat more concisely
       reporter.warn(shape, 'For relative timers: Only the Participants involved in the Choreography ' +
         'Activity that immediately precedes the Event would know the time. The sender of the Choreography Activity ' +
         'that immediately follows the timer MUST be involved ' +

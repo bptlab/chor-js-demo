@@ -19,7 +19,7 @@ export default function eventBasedGatewayConstraint(shape, reporter) {
     const receivers = flat(following.map(a => a.bandShapes.filter(p => !isInitiating(p))));
     if (!(senders.every((s, i, a) => a[0].businessObject.id === s.businessObject.id) ||
       receivers.every((r, i, a) => a[0].businessObject.id === r.businessObject.id))) {
-      reporter.error(shape, 'After an Event Based Gateway all senders or all receivers must be the same');
+      reporter.error(shape, 'After an event-based gateway, all senders or all receivers must be the same');
     }
   }
 }

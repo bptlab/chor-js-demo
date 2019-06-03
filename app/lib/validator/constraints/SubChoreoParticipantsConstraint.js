@@ -12,14 +12,13 @@ import {
  */
 export default function subChoreoParticipantsConstraint(shape, reporter) {
   if (is(shape, 'bpmn:SubChoreography')) {
-
     const allParticipants = new Set(flat(shape.children.filter(isChoreoActivity)
       .map(act => act.bandShapes)).map(bs => bs.businessObject));
     const shownParticipants = new Set(shape.bandShapes.map(bs => bs.businessObject));
     const notShown = Array.from(allParticipants)
       .filter(part => !shownParticipants.has(part)).map(bo => bo.name);
     if (notShown.length > 0) {
-      reporter.warn(shape, 'Following participants are not shown as bands: '+ notShown.join(', '));
+      reporter.warn(shape, 'Participants <b>' + notShown.join(', ') + '</b> are used within the sub-choreography, but are not displayed as bands');
     }
 
   }

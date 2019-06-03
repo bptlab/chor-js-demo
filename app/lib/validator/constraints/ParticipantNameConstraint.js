@@ -13,8 +13,8 @@ export default function participantNameConstraint(shape, reporter) {
     const isUnique = reporter.elementRegistry.filter(elem => elem.diBand)
       .every(elem => elem.businessObject.name !== name || elem.businessObject.id === id);
     if (!isUnique) {
-      reporter.warn(shape, 'Multiple different participants with same name: ' + name +
-        '. Names should be unique for clarity');
+      reporter.warn(shape, 'Multiple different participants share the name <b>' + name +
+        '</b>, which should be unique');
     }
   }
 }
