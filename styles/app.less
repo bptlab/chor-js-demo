@@ -4,7 +4,6 @@
 
 body,
 html {
-
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: rgb(51, 51, 51);
   font-size: 12px;
@@ -18,7 +17,6 @@ html {
 a {
   text-decoration: none;
   color: rgb(51, 51, 51);
-
 }
 
 .content {
@@ -89,9 +87,7 @@ a {
   }
 }
 
-
 .buttons {
-
   position: fixed;
   bottom: 20px;
   left: 20px;
@@ -101,7 +97,16 @@ a {
   margin: 0;
   list-style: none;
 
-  > li {
+  > li.divider {
+    display: inline-block;
+    margin-right: 10px;
+    width: 1px;
+    height: 40px;
+    border-left: 1px solid #DDD;
+    vertical-align: middle;
+  }
+
+  > li.button {
     display: inline-block;
     margin-right: 10px;
     background: #FAFAFA;
@@ -128,7 +133,12 @@ a {
       cursor: pointer;
       outline: inherit;
     }
+  }
 
+  > #validation-panel.active {
+    -webkit-box-shadow: inset 0px 0px 16px 1px rgba(0,0,0,0.23);
+    -moz-box-shadow: inset 0px 0px 16px 1px rgba(0,0,0,0.23);
+    box-shadow: inset 0px 0px 16px 1px rgba(0,0,0,0.23);
   }
 
   a {
@@ -138,7 +148,6 @@ a {
   a.active {
     opacity: 1;
   }
-
 }
 
 .git-info {
@@ -155,8 +164,86 @@ a {
     width: 52px; // Same as bpmn.io logo
     height: 52px;
     text-align: center;
+  }
+}
 
+.validation-annotation {
+  position: relative;
+  border-width: 2px;
+  border-color: #FFFFFF;
+  border-style: solid;
+  border-radius: 50%;
+  padding: 2px;
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+
+  &:hover > .validation-info {
+    display: block;
   }
 
+  .validation-info {
+    display: none;
+    position: absolute;
+    top: -2px;
+    left: 6px;
+    list-style: none;
+    padding-left: 0;
+    min-width: 180px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 4;
 
+    li {
+      padding: 4px;
+      border-style: solid;
+      border-width: 2px;
+      border-top-width: 0px;
+    }
+
+    li:first-child {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-top-width: 2px;
+    }
+
+    li:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    .li-error {
+      background-color: #FDF2F5;
+      border-color: #EC1E0D;
+    }
+
+    .li-warning {
+      background-color: #FFFBD5;
+      border-color: #FB9500;
+    }
+
+    .li-note {
+      background-color: rgb(245, 245, 245);
+      border-color: rgb(132, 140, 148);
+    }
+  }
+
+  .validation-count {
+    position: absolute;
+    font-weight: bold;
+    color: #111111;
+    left: 2px;
+    top: -6px;
+    text-shadow: 1px 1px 1px #FFFFFF, -1px -1px 1px #FFFFFF, 1px -1px 1px #FFFFFF, -1px 1px 1px #FFFFFF;
+  }
+}
+
+.val-error {
+  .validation-annotation;
+  background-color: #EC1E0D;
+}
+
+.val-warning {
+  .validation-annotation;
+  background-color: #FB9500;
 }

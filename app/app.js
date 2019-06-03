@@ -1,7 +1,8 @@
-import xml from './resources/multiple.bpmn';
+import xml from './resources/ManyErrorsAndWarnings.bpmn';
 import blankXml from './resources/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
+import Reporter from './lib/validator/Validator.js';
 
 var modeler = new ChoreoModeler({
   container: '#canvas',
@@ -11,6 +12,7 @@ var modeler = new ChoreoModeler({
 });
 
 renderModel(xml);
+
 
 function renderModel(newXml) {
   modeler.setXML(newXml).then(result => {
@@ -35,8 +37,26 @@ function saveDiagram(done) {
 }
 
 $(function() {
+  const reporter = new Reporter(modeler);
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
+  const validateButton = $('#js-validate');
+  let isValidating = false;
+
+  validateButton.click(e => {
+    if (!isValidating) {
+      isValidating = true;
+      reporter.validateDiagram();
+      $(e.target.parentElement).addClass('active');
+      $(e.target).prop('title', 'Disable checking');
+    } else {
+      isValidating = false;
+      reporter.clearAll();
+      $(e.target.parentElement).removeClass('active');
+      $(e.target).prop('title', 'Check diagram for problems');
+
+    }
+  });
 
   $('.buttons a').click(function(e) {
     if (!$(this).is('.active')) {
@@ -86,8 +106,19 @@ $(function() {
 
   });
 
-  modeler.on('commandStack.changed', exportArtifacts);
+
   exportArtifacts();
+  modeler.on('commandStack.changed', exportArtifacts);
+  modeler.on('commandStack.changed',function() {
+    if (isValidating) {
+      reporter.validateDiagram();
+    }
+  });
+  modeler.on('import.render.complete', function() {
+    if (isValidating) {
+      reporter.validateDiagram();
+    }
+  });
 });
 
 
