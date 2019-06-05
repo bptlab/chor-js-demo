@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- origin at X=0.0 Y=0.0 -->
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ext="http://org.eclipse.bpmn2/ext" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="_tTv5YOycEeiHGOQ2NkJZNQ" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.4.3.Final-v20180418-1358-B1">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="_tTv5YOycEeiHGOQ2NkJZNQ">
   <bpmn2:message id="Message_2" name="Message 1">
-    <bpmn2:extensionElements>
-      <ext:style/>
-    </bpmn2:extensionElements>
   </bpmn2:message>
   <bpmn2:message id="Message_1mpty7c" />
   <bpmn2:message id="Message_06fz16u" />
@@ -54,24 +50,12 @@
     <bpmn2:participant id="Participant_1" name="A">
     </bpmn2:participant>
     <bpmn2:participant id="Participant_2" name="B">
-      <bpmn2:extensionElements>
-        <ext:style ext:shapeForeground="546778" ext:shapeBackground="d4e7f8" ext:labelForeground="546778" ext:labelFont="arial,9.0,-,-" ext:routingStyle="Manhattan"/>
-      </bpmn2:extensionElements>
     </bpmn2:participant>
     <bpmn2:participant id="Participant_3" name="C">
-      <bpmn2:extensionElements>
-        <ext:style ext:shapeForeground="546778" ext:shapeBackground="d4e7f8" ext:labelForeground="546778" ext:labelFont="arial,9.0,-,-" ext:routingStyle="Manhattan"/>
-      </bpmn2:extensionElements>
     </bpmn2:participant>
     <bpmn2:participant id="Participant_4" name="E">
-      <bpmn2:extensionElements>
-        <ext:style ext:shapeForeground="546778" ext:shapeBackground="d4e7f8" ext:labelForeground="546778" ext:labelFont="arial,9.0,-,-" ext:routingStyle="Manhattan"/>
-      </bpmn2:extensionElements>
     </bpmn2:participant>
     <bpmn2:participant id="Participant_5" name="D">
-      <bpmn2:extensionElements>
-        <ext:style ext:shapeForeground="546778" ext:shapeBackground="d4e7f8" ext:labelForeground="546778" ext:labelFont="arial,9.0,-,-" ext:routingStyle="Manhattan"/>
-      </bpmn2:extensionElements>
     </bpmn2:participant>
     <bpmn2:messageFlow id="MessageFlow_1" messageRef="Message_2" name="Message Flow 1" sourceRef="Participant_2" targetRef="Participant_1"/>
     <bpmn2:choreographyTask id="ChoreographyTask_1" name="Choreography Task 1" initiatingParticipantRef="Participant_1">
