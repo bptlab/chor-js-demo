@@ -23,7 +23,7 @@ export default function simpleFlowConstraint(shape, reporter) {
         simpleConstraint = simpleConstraint && getParticipants(activityShape).includes(participant);
       });
       if (!simpleConstraint) {
-        reporter.error(shape, 'The initiator <b>' + shape.businessObject.name + '</b> needs to be part of all preceding activities');
+        reporter.error(shape, 'The initiator <b>' + shape.businessObject.name + '</b> needs to be part of all directly preceding activities');
       }
     }
   }
