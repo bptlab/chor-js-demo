@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- origin at X=0.0 Y=0.0 -->
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ext="http://org.eclipse.bpmn2/ext" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="_IY9V4K1UEeiUxPrhBUWPfA" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.4.3.Final-v20180418-1358-B1">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="_IY9V4K1UEeiUxPrhBUWPfA">
   <bpmn2:message id="Message_6" name="Message 5">
-    <bpmn2:extensionElements>
-      <ext:style/>
-    </bpmn2:extensionElements>
   </bpmn2:message>
   <bpmn2:message id="Message_8" name="Message 7">
-    <bpmn2:extensionElements>
-      <ext:style/>
-    </bpmn2:extensionElements>
   </bpmn2:message>
   <bpmn2:message id="Message_10" name="Message 9">
-    <bpmn2:extensionElements>
-      <ext:style/>
-    </bpmn2:extensionElements>
   </bpmn2:message>
   <bpmn2:choreography id="_SfwmwK1UEeiUxPrhBUWPfA">
     <bpmn2:participant id="_pXE8wK1UEeiUxPrhBUWPfA" name="RolleA"/>

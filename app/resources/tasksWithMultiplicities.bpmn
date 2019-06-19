@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- origin at X=0.0 Y=0.0 -->
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ext="http://org.eclipse.bpmn2/ext" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="_QMlucNHsEeiw4v0Tm7WDnw" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.4.3.Final-v20180418-1358-B1">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="_QMlucNHsEeiw4v0Tm7WDnw">
   <bpmn2:message id="_9m3pIdHuEeiw4v0Tm7WDnw" name="some message"/>
   <bpmn2:choreography id="_VDo88NHsEeiw4v0Tm7WDnw">
     <bpmn2:participant id="Participant_1" name="Sender">
-      <bpmn2:extensionElements>
-        <ext:style xsi:type="xs:anyType" ext:shapeForeground="546778" ext:shapeBackground="d4e7f8" ext:labelForeground="546778" ext:labelFont="arial,9.0,-,-" ext:routingStyle="Manhattan"/>
-      </bpmn2:extensionElements>
     </bpmn2:participant>
     <bpmn2:participant id="Participant_2" name="Receiver">
-      <bpmn2:extensionElements>
-        <ext:style xsi:type="xs:anyType" ext:shapeForeground="546778" ext:shapeBackground="d4e7f8" ext:labelForeground="546778" ext:labelFont="arial,9.0,-,-" ext:routingStyle="Manhattan"/>
-      </bpmn2:extensionElements>
       <bpmn2:participantMultiplicity id="_wfNp0NIDEeiw4v0Tm7WDnw" maximum="2"/>
     </bpmn2:participant>
     <bpmn2:messageFlow id="_9m3pINHuEeiw4v0Tm7WDnw_1" messageRef="_9m3pIdHuEeiw4v0Tm7WDnw" sourceRef="Participant_1" targetRef="Participant_2"/>
