@@ -19,7 +19,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jan-ladleif/chor-js-demo"
+    "url": "https://github.com/bptlab/chor-js-demo"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
