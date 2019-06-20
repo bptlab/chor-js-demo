@@ -91,7 +91,7 @@ $(function() {
     exportArtifacts();
   });
 
-  $('input').change(function(e) {
+  $('input#file-input').change(function(e) {
     var reader = new FileReader();
     var file = document.querySelector('input[type=file]').files[0];
     reader.addEventListener('load', function() {
