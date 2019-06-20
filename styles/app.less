@@ -88,63 +88,55 @@ a {
 }
 
 .buttons {
+  display: flex;
   position: fixed;
   bottom: 20px;
   left: 20px;
-  font-size: 28px;
-
   padding: 0;
   margin: 0;
-  list-style: none;
 
-  > li.divider {
-    display: inline-block;
+  * {
     margin-right: 10px;
-    width: 1px;
-    height: 40px;
-    border-left: 1px solid #DDD;
-    vertical-align: middle;
-  }
-
-  > li.button {
-    display: inline-block;
-    margin-right: 10px;
-    background: #FAFAFA;
-    border: solid 1px #CCC;
-    border-radius: 2px;
-    width: 40px;
     height: 40px;
     text-align: center;
-
-    > a {
-      display: inline-block;
-      margin-bottom: 3px;
-      vertical-align: middle;
-    }
-
-    > button {
-      padding: 0;
-      margin: 0 0 3px; //3 pixels because of the strange format of the glyphs
-      vertical-align: middle;
-      background: none;
-      color: inherit;
-      border: none;
-      font: inherit;
-      cursor: pointer;
-      outline: inherit;
-    }
+    line-height: 40px;
+    font-size: 26px;
   }
 
-  > #validation-panel.active {
+  .divider {
+    width: 1px;
+    border-left: 1px solid #DDD;
+  }
+
+  a, button {
+    display: block;
+    width: 40px;
+    padding: 0px;
+    background-color: #FAFAFA;
+    border: solid 1px #CCC;
+    border-radius: 2px;
+  }
+
+  a.active:hover, button:hover {
+    color: #FF7400;
+  }
+
+  .selected {
     background-color: #d3d3d3;
+  }
+
+  button {
+    cursor: pointer;
   }
 
   a {
     opacity: 0.3;
+    cursor: default;
   }
 
   a.active {
     opacity: 1;
+    cursor: pointer;
   }
 }
 

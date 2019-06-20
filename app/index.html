@@ -25,27 +25,16 @@
     <div id="canvas"></div>
   </div>
 
-
-  <ul class="buttons">
-    <li class="button">
-      <button id="js-new-diagram" class="icon-doc-new" title="Create new empty diagram"></button>
-    </li>
-    <li class="button">
-      <button class="icon-folder" title="Select BPMN XML file" onclick="document.getElementById('file-input').click();"></button>
-      <input id="file-input" name="name" type="file" accept=".bpmn, .xml" style="display: none;" >
-    </li>
-    <li class="divider"></li>
-    <li class="button">
-      <a id="js-download-diagram" class="icon-file-code" href title="Download BPMN XML file"></a>
-    </li>
-    <li class="button">
-      <a id="js-download-svg" class="icon-file-image" href title="Download as SVG image"></a>
-    </li>
-    <li class="divider"></li>
-    <li class="button" id="validation-panel">
-      <button class="icon-bug" id="js-validate" title="Check diagram for problems"></button>
-    </li>
-  </ul>
+  <div class="buttons">
+    <button id="js-new-diagram" class="icon-doc-new" title="Create new empty diagram"></button>
+    <button class="icon-folder" title="Select BPMN XML file" onclick="document.getElementById('file-input').click();"></button>
+    <input id="file-input" name="name" type="file" accept=".bpmn, .xml" style="display: none;" >
+    <div class="divider"></div>
+    <a id="js-download-diagram" class="icon-file-code" href title="Download BPMN XML file"></a>
+    <a id="js-download-svg" class="icon-file-image" href title="Download as SVG image"></a>
+    <div class="divider"></div>
+    <button class="icon-bug" id="js-validate" title="Check diagram for problems"></button>
+  </div>
 
   <ul class="git-info" >
     <li>

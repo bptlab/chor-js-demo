@@ -3,7 +3,7 @@
   <bpmn2:message id="Message_1rnq4x3" name="pizza" />
   <bpmn2:message id="Message_1mi4idx" />
   <bpmn2:message id="Message_1pam53q" name="pizza order" />
-  <bpmn2:choreography id="Choreography_fa1337">
+  <bpmn2:choreography id="PizzaDelivery">
     <bpmn2:participant id="Participant_06qakjv" name="Customer" />
     <bpmn2:participant id="Participant_0mgz9si" name="Pizza Place" />
     <bpmn2:participant id="Participant_0537iz2" name="Delivery Boy" />
@@ -43,7 +43,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_0xamnn2" sourceRef="ChoreographyTask_175oxwe" targetRef="EndEvent_1lv264w" />
   </bpmn2:choreography>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Choreography_1" bpmnElement="Choreography_fa1337">
+    <bpmndi:BPMNPlane id="BPMNPlane_Choreography_1" bpmnElement="PizzaDelivery">
       <bpmndi:BPMNShape id="StartEvent_00yy9i8_di" bpmnElement="StartEvent_00yy9i8">
         <dc:Bounds x="234" y="350" width="36" height="36" />
       </bpmndi:BPMNShape>
