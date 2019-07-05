@@ -1,4 +1,4 @@
-import xml from './resources/pizzaDelivery.bpmn';
+import xml from './resources/refs.bpmn';
 import blankXml from './resources/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';

@@ -8,13 +8,17 @@ import eventBasedGatewayConstraint from './constraints/EventBasedGatewayConstrai
 import participantNameConstraint from './constraints/ParticipantNameConstraint';
 import simpleFlowConstraint from './constraints/SimpleFlowConstraint';
 import subChoreoParticipantsConstraint from './constraints/SubChoreoParticipantsConstraint';
+import callChoreoParticipantsBijectivityConstraint from './constraints/CallChoreoParticipantsBijectivityConstraint';
+import noCyclicCallChoreosConstraint from './constraints/NoCyclicCallChoreosConstraint';
 // import timerEventConstraint from './constraints/TimerEventConstraint';
 
 const CONSTRAINTS = [
   eventBasedGatewayConstraint,
   participantNameConstraint,
   simpleFlowConstraint,
-  subChoreoParticipantsConstraint
+  subChoreoParticipantsConstraint,
+  callChoreoParticipantsBijectivityConstraint,
+  noCyclicCallChoreosConstraint
   // We do not check the timer constraint right now because of reasons stated in the code there.
   // timerEventConstraint
 ];
