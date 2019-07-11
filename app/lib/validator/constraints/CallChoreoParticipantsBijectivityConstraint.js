@@ -1,6 +1,5 @@
 import { is } from 'bpmn-js/lib/util/ModelUtil';
 
-
 /**
  * The mapping between the CallChoreo's participants and the participants of the called choreography should be bijective.
  * @param shape
@@ -16,22 +15,22 @@ export default function callChoreoParticipantsBijectivityConstraint(shape, repor
       const association = participantAssociations.find(p => p.outerParticipantRef === band.businessObject);
       const bandsInnerParticipant = association ? association.innerParticipantRef : undefined;
       checkFunctionProperty(band, bandsInnerParticipant, reporter);
-      checkInjectivProperty(band, bandsInnerParticipant, participantAssociations, reporter);
+      checkInjectivityProperty(band, bandsInnerParticipant, participantAssociations, reporter);
     });
 
-    checkSurjectivProperty(participantAssociations, callChoreoBO, shape, reporter);
+    checkSurjectivityProperty(participantAssociations, callChoreoBO, shape, reporter);
   }
 }
 
 
 function checkFunctionProperty(band, bandsInnerParticipant, reporter) {
   if (!bandsInnerParticipant) {
-    reporter.warn(band, 'The participant <b>' + band.businessObject.name + '</b> ' +
+    reporter.warn(band, '<b>' + band.businessObject.name + '</b> ' +
       'does not yet reference an inner participant');
   }
 }
 
-function checkInjectivProperty(band, bandsInnerParticipant, participantAssociations, reporter) {
+function checkInjectivityProperty(band, bandsInnerParticipant, participantAssociations, reporter) {
   const injectivityViolators = participantAssociations
     .filter(pa => pa.innerParticipantRef === bandsInnerParticipant && pa.outerParticipantRef !== band.businessObject)
     .map(pa => pa.outerParticipantRef);
@@ -43,7 +42,7 @@ function checkInjectivProperty(band, bandsInnerParticipant, participantAssociati
   }
 }
 
-function checkSurjectivProperty(participantAssociations, callChoreoBO, shape, reporter) {
+function checkSurjectivityProperty(participantAssociations, callChoreoBO, shape, reporter) {
   const participantCodomain = callChoreoBO.calledChoreographyRef.participants || [];
   const surjectivityViolators = participantCodomain
     .filter(p => !participantAssociations.some(a => a.innerParticipantRef === p));
@@ -51,8 +50,7 @@ function checkSurjectivProperty(participantAssociations, callChoreoBO, shape, re
     const violationString = surjectivityViolators.map(bo => bo.name).join(', ');
     const calleeName = callChoreoBO.calledChoreographyRef.name || callChoreoBO.calledChoreographyRef.id;
     reporter.warn(shape,
-      '<b>' + callChoreoBO.name + '</b> does not reference all participants of <b>'
-      + calleeName + '</b>. The following participants are unreferenced: <b>'
-      + violationString + '</b>.');
+      '<b>' + callChoreoBO.name + '</b> does not reference participants <b>'
+      + violationString + '</b> of <b>' + calleeName + '</b>');
   }
 }
