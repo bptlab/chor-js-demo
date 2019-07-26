@@ -25,6 +25,8 @@
     "bpmn"
   ],
   "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-plugin-bpmn-io": "^0.8.2",
     "less": "^3.9.0",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-stringify-anything": "^1.2.0"
