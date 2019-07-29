@@ -1,5 +1,5 @@
-import xml from './resources/pizzaDelivery.bpmn';
-import blankXml from './resources/newDiagram.bpmn';
+import xml from './diagrams/pizzaDelivery.bpmn';
+import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
 import Reporter from './lib/validator/Validator.js';
