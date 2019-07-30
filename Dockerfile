@@ -1,15 +1,19 @@
-FROM node:9.4
+FROM node:12 as builder
+# this part is only needed until packaging of chor-js is merged into upstream
+RUN git clone --single-branch --branch packaging https://github.com/bptlab/chor-js.git
+RUN cd chor-js & npm install & npm link chor-js
 
-# expose ports
-EXPOSE 9013
+WORKDIR /usr/src
+# copy both package and package-lock
+COPY package*.json .
 
-# install packages
-COPY package*.json /
+COPY app ./app
 RUN npm install
-
-# copy sources
-COPY . /
+# linking can be removed when packaging of chor-js is merged
+RUN npm link chor-js
 RUN npm run build
 
-ENTRYPOINT ["npm"]
-CMD ["run", "serve"]
+# second stage of the build
+FROM nginx:stable-alpine
+COPY --from=builder /usr/src/build /usr/share/nginx/html
+RUN cat /etc/nginx/nginx.conf

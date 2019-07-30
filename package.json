@@ -5,9 +5,8 @@
   "main": "app/app.js",
   "scripts": {
     "lint": "eslint .",
-    "build": "grunt build",
-    "serve": "grunt serve",
-    "dev": "grunt auto-build"
+    "build": "parcel build app/index.html -d build --no-minify",
+    "dev": "parcel app/index.html"
   },
   "keywords": [
     "choreography-modeler"
