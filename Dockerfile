@@ -8,6 +8,7 @@ WORKDIR /usr/src
 COPY package*.json .
 
 COPY app ./app
+COPY .babelrc .
 RUN npm install
 # linking can be removed when packaging of chor-js is merged
 RUN npm link chor-js

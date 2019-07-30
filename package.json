@@ -24,6 +24,7 @@
     "bpmn"
   ],
   "devDependencies": {
+    "@babel/core": "^7.5.5",
     "eslint": "^6.1.0",
     "eslint-plugin-bpmn-io": "^0.8.2",
     "less": "^3.9.0",
@@ -33,6 +34,7 @@
   "dependencies": {
     "bpmn-js": "^4.0.3",
     "chor-js": "^0.3.2",
+    "core-js": "^3.1.4",
     "jquery": "^3.3.1"
   }
 }
