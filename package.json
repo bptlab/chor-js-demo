@@ -5,7 +5,7 @@
   "main": "app/app.js",
   "scripts": {
     "lint": "eslint .",
-    "build": "parcel build app/index.html -d build --no-minify",
+    "build": "parcel build app/index.html -d build",
     "dev": "parcel app/index.html"
   },
   "keywords": [
