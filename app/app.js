@@ -1,5 +1,5 @@
 import 'core-js/stable';
-import xml from './diagrams/refs.bpmn';
+import xml from './diagrams/pizzaDelivery.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
