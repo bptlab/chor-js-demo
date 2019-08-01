@@ -1,6 +1,7 @@
 FROM node:12 as builder
 # this part is only needed until packaging of chor-js is merged into upstream
-RUN git clone --single-branch --branch packaging https://github.com/bptlab/chor-js.git
+# Update the checkout for newer versions, as the clone will be cached
+RUN git clone --single-branch --branch packaging https://github.com/bptlab/chor-js.git && cd chor-js && git checkout da23628
 RUN cd chor-js & npm install & npm link chor-js
 
 WORKDIR /usr/src
@@ -8,7 +9,8 @@ WORKDIR /usr/src
 COPY package*.json .
 
 COPY app ./app
-COPY .babelrc .
+COPY .babelrc .babelrc
+RUN ls -al
 RUN npm install
 # linking can be removed when packaging of chor-js is merged
 RUN npm link chor-js
@@ -20,4 +22,4 @@ EXPOSE 9013
 COPY --from=builder /usr/src/build /usr/src/build
 WORKDIR /usr/src
 RUN npm install http-server -g
-CMD http-server build -p 9013
+CMD http-server ./build -p 9013
