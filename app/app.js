@@ -1,7 +1,7 @@
 import xml from './diagrams/pizzaDelivery.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
-import ChoreoModeler from 'chor-js/lib/Modeler';
+import ChoreoModeler from 'active-chor-js/lib/Modeler';
 import Reporter from './lib/validator/Validator.js';
 
 var modeler = new ChoreoModeler({
