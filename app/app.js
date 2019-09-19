@@ -2,11 +2,11 @@ import 'core-js/stable';
 import xml from './diagrams/pizzaDelivery.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
-import ChoreoModeler from 'chor-js/lib/Modeler';
+import { Modeler } from 'chor-js';
 import Reporter from './lib/validator/Validator.js';
 
 
-var modeler = new ChoreoModeler({
+var modeler = new Modeler({
   container: '#canvas',
   keyboard: {
     bindTo: document
