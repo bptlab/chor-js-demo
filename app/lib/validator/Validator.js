@@ -18,6 +18,7 @@ const CONSTRAINTS = [
   simpleFlowConstraint,
   subChoreoParticipantsConstraint,
   callChoreoParticipantsBijectivityConstraint,
+  noCyclicCallChoreosConstraint,
   // We do not check the timer constraint right now because of reasons stated in the code there.
   // timerEventConstraint
 ];
