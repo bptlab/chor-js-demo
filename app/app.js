@@ -1,5 +1,5 @@
-import xml from './resources/pizzaDelivery.bpmn';
-import blankXml from './resources/newDiagram.bpmn';
+import xml from './diagrams/pizzaDelivery.bpmn';
+import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
 import Reporter from './lib/validator/Validator.js';
@@ -13,13 +13,10 @@ var modeler = new ChoreoModeler({
 
 renderModel(xml);
 
-
 function renderModel(newXml) {
-  modeler.setXML(newXml).then(result => {
-    return modeler.displayChoreography({
-      // choreoID: '_choreo1'
-    });
-  }).then(result => {
+  modeler.importXML(newXml, {
+    // choreoID: '_choreo1'
+  }).then(() => {
     modeler.get('canvas').zoom('fit-viewport');
   }).catch(error => {
     console.error('something went wrong: ', error);

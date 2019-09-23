@@ -62,16 +62,6 @@ module.exports = function(grunt) {
           }
         ]
       },
-      assets: {
-        files: [
-          {
-            expand: true,
-            cwd: 'assets',
-            src: ['**/*.*', '!**/*.js'],
-            dest: 'dist/assets'
-          }
-        ]
-      },
       app: {
         files: [
           {
@@ -92,7 +82,7 @@ module.exports = function(grunt) {
       },
       styles: {
         files: {
-          'dist/css/app.css': 'styles/app.less'
+          'dist/css/app.css': 'app/styles/app.less'
         }
       }
     },
@@ -108,7 +98,7 @@ module.exports = function(grunt) {
 
       less: {
         files: [
-          'styles/**/*.less'
+          'app/styles/**/*.less'
         ],
         tasks: [
           'less'
