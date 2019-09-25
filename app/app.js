@@ -1,4 +1,4 @@
-import xml from './diagrams/circularRef.bpmn';
+import xml from './diagrams/pizzaDelivery.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';

@@ -15,7 +15,6 @@ export default function noCyclicCallChoreosConstraint(shape, reporter) {
     const parentChoreography = getContainingChoreo(callChoreoBO);
     const cycles = dfs(calledChoreo, [parentChoreography], [callChoreoBO.name]);
 
-    console.log(cycles);
     for (const cycle of cycles) {
       const nodes = cycle.nodes;
       const edges = cycle.edges;
