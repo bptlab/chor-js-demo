@@ -22,7 +22,8 @@
     "url": "https://github.com/bptlab/chor-js-demo"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "esmify": "^2.1.1",
+    "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.1.0",
@@ -41,6 +42,8 @@
     "watchify": "^3.10.0"
   },
   "dependencies": {
+    "bpmn-js-properties-panel": "^0.33.1",
+    "bpmn-js": "^6.2.1",
     "chor-js": "^0.4.0",
     "inherits": "^2.0.1",
     "jquery": "^3.3.1"

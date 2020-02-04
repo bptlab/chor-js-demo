@@ -3,9 +3,21 @@ import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
 import Reporter from './lib/validator/Validator.js';
+import propertiesPanelModule from 'bpmn-js-properties-panel';
+import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/bpmn';
 
+console.log(propertiesPanelModule);
 var modeler = new ChoreoModeler({
   container: '#canvas',
+  propertiesPanel: {
+    parent: '#properties-panel'
+  },
+  additionalModules:[
+    propertiesPanelModule,
+    propertiesProviderModule
+  ],
+
+
   keyboard: {
     bindTo: document
   }

@@ -13,10 +13,9 @@ module.exports = function(grunt) {
           ['stringify', {
             extensions: ['.bpmn']
           }],
-          ['babelify', {
-            presets: 'env',
-            global: true
-          }]
+        ],
+        plugin: [
+          'esmify'
         ]
       },
       watch: {
@@ -39,6 +38,14 @@ module.exports = function(grunt) {
           {
             src: 'node_modules/diagram-js/assets/diagram-js.css',
             dest: 'dist/css/diagram-js.css'
+          }
+        ]
+      },
+      panel: {
+        files: [
+          {
+            src: 'node_modules/bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css',
+            dest: 'dist/css/bpmn-js-properties-panel.css'
           }
         ]
       },
