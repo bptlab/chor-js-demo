@@ -54,6 +54,8 @@ $(function() {
 
   panelToggle.click(e => {
     propertiesPanel.toggle();
+    $('#open-toggle').toggle();
+    $('#close-toggle').toggle();
   });
   let isValidating = false;
 
