@@ -17,7 +17,6 @@ var modeler = new ChoreoModeler({
     propertiesProviderModule
   ],
 
-
   keyboard: {
     bindTo: document
   }
@@ -50,6 +49,12 @@ $(function() {
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
   const validateButton = $('#js-validate');
+  const panelToggle = $('#panel-toggle');
+  const propertiesPanel = $('#properties-panel');
+
+  panelToggle.click(e => {
+    propertiesPanel.toggle();
+  });
   let isValidating = false;
 
   validateButton.click(e => {
