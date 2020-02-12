@@ -6,13 +6,12 @@ import Reporter from './lib/validator/Validator.js';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/bpmn';
 
-console.log(propertiesPanelModule);
 var modeler = new ChoreoModeler({
   container: '#canvas',
   propertiesPanel: {
     parent: '#properties-panel'
   },
-  additionalModules:[
+  additionalModules: [
     propertiesPanelModule,
     propertiesProviderModule
   ],
@@ -122,10 +121,9 @@ $(function() {
 
   });
 
-
   exportArtifacts();
   modeler.on('commandStack.changed', exportArtifacts);
-  modeler.on('commandStack.changed',function() {
+  modeler.on('commandStack.changed', function() {
     if (isValidating) {
       reporter.validateDiagram();
     }
@@ -136,7 +134,6 @@ $(function() {
     }
   });
 });
-
 
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
