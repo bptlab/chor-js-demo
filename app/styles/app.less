@@ -14,9 +14,34 @@ html {
   margin: 0;
 }
 
-a {
-  text-decoration: none;
-  color: rgb(51, 51, 51);
+#panel-toggle {
+  z-index: 10;
+  display: flex;
+  align-items: center; /* Vertical center alignment */
+  justify-content: center;
+  background-color: transparent;
+
+  button {
+    border: none;
+    background-color: #FAFAFA;
+    border-left: solid 1px #CCC;
+    border-top: solid 1px #CCC;
+    border-bottom: solid 1px #CCC;
+    border-radius: 2px;
+    height: 35px;
+    width: 25px;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    text-align: center;
+
+  }
+  #close-toggle {
+    display: none;
+    margin-right: -1px;
+  }
+
+
 }
 
 .content {
@@ -25,8 +50,24 @@ a {
   height: 100%;
   display: flex;
 
+
   #canvas {
     flex-grow: 1;
+    position: relative;
+    margin-right: -25px;
+  }
+
+  #properties-panel {
+    background-color: #FAFAFA;
+    display: none;
+    max-width: 250px;
+    min-width: 250px;
+    min-height: 100%;
+    border-left: solid 1px #CCC;
+
+    > .bpp-properties-panel {
+      background-color: #FAFAFA;
+    }
   }
 
   > .message {
@@ -115,6 +156,8 @@ a {
     background-color: #FAFAFA;
     border: solid 1px #CCC;
     border-radius: 2px;
+    text-decoration: none;
+    color: rgb(51, 51, 51);
   }
 
   a.active:hover, button:hover {
@@ -141,19 +184,22 @@ a {
 }
 
 .git-info {
-  position:fixed;
-  bottom: 18px;
-  right: 75px;
-  margin: 0;
-  list-style: none;
+  position: absolute;
+  right: 67px;
+  bottom: 15px;
+  z-index: 101;
   text-align: center;
   vertical-align: middle;
+  width: 52px; // Same as bpmn.io logo
+  max-height: 52px;
+  min-height: 52px;
 
-  > li {
+  > a {
     font-size: 40px;
-    width: 52px; // Same as bpmn.io logo
-    height: 52px;
+
     text-align: center;
+    text-decoration: none;
+    color: rgb(51, 51, 51);
   }
 }
 

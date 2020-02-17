@@ -8,6 +8,7 @@
   <link rel="icon" href="favicon.ico">
 
   <link rel="stylesheet" href="css/diagram-js.css" />
+  <link rel="stylesheet" href="css/bpmn-js-properties-panel.css" />
   <link rel="stylesheet" href="vendor/bpmn-js/assets/bpmn-font/css/bpmn.css" />
   <link rel="stylesheet" href="vendor/chor-js/icons/include/css/choreography.css" />
   <link rel="stylesheet" href="vendor/chor-js/styles/chor-js.css" />
@@ -23,8 +24,19 @@
   <title>Choreography Modeler</title>
 </head>
 <body>
+
   <div class="content with-diagram" id="js-drop-zone">
-    <div id="canvas"></div>
+    <div id="canvas">
+      <div class="git-info" >
+          <a class="icon-github-circled" href="https://github.com/bptlab/chor-js-demo" target="_blank"
+             title="Contribute on GitHub" rel="noopener noreferrer"></a>
+      </div>
+    </div>
+    <div id="panel-toggle">
+      <button id="open-toggle" title="Open properties panel">⟨</button>
+      <button id="close-toggle" title="Close properties panel">⟩</button>
+    </div>
+    <div id="properties-panel"></div>
   </div>
 
   <div class="buttons">
@@ -38,12 +50,7 @@
     <button class="icon-bug" id="js-validate" title="Check diagram for problems"></button>
   </div>
 
-  <ul class="git-info" >
-    <li>
-      <a class="icon-github-circled" href="https://github.com/bptlab/chor-js-demo" target="_blank"
-         title="Contribute on GitHub"></a>
-    </li>
-  </ul>
   <script src="./app.js"></script>
+
 </body>
 </html>

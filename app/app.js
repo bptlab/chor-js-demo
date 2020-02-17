@@ -3,9 +3,19 @@ import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
 import ChoreoModeler from 'chor-js/lib/Modeler';
 import Reporter from './lib/validator/Validator.js';
+import propertiesPanelModule from 'bpmn-js-properties-panel';
+import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/bpmn';
 
 var modeler = new ChoreoModeler({
   container: '#canvas',
+  propertiesPanel: {
+    parent: '#properties-panel'
+  },
+  additionalModules: [
+    propertiesPanelModule,
+    propertiesProviderModule
+  ],
+
   keyboard: {
     bindTo: document
   }
@@ -38,6 +48,14 @@ $(function() {
   var downloadLink = $('#js-download-diagram');
   var downloadSvgLink = $('#js-download-svg');
   const validateButton = $('#js-validate');
+  const panelToggle = $('#panel-toggle');
+  const propertiesPanel = $('#properties-panel');
+
+  panelToggle.click(e => {
+    propertiesPanel.toggle();
+    $('#open-toggle').toggle();
+    $('#close-toggle').toggle();
+  });
   let isValidating = false;
 
   validateButton.click(e => {
@@ -103,10 +121,9 @@ $(function() {
 
   });
 
-
   exportArtifacts();
   modeler.on('commandStack.changed', exportArtifacts);
-  modeler.on('commandStack.changed',function() {
+  modeler.on('commandStack.changed', function() {
     if (isValidating) {
       reporter.validateDiagram();
     }
@@ -117,7 +134,6 @@ $(function() {
     }
   });
 });
-
 
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
