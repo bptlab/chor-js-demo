@@ -29,11 +29,22 @@ html {
     border-bottom: solid 1px #CCC;
     border-radius: 2px;
     height: 35px;
+
     width: 25px;
     font-size: 25px;
     font-weight: bold;
     font-family: Arial, sans-serif;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 0px;
+      width: 0px;
+    }
 
   }
   #close-toggle {
