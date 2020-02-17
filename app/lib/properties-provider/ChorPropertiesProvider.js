@@ -17,7 +17,7 @@ export default function ChorPropertiesProvider(injector) {
       if (element.businessObject.eventDefinitions) {
         const definition = element.businessObject.eventDefinitions[0];
         if (definition.$type === 'bpmn:ConditionalEventDefinition') {
-          generalTab[0].groups = generalTab[0].groups.filter(g => g.id !== 'details');
+          generalTab[0].groups.filter(g => g.id === 'details')[0].entries = [];
         }
       }
     }
