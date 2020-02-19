@@ -4,8 +4,9 @@ import { is } from 'bpmn-js/lib/util/ModelUtil';
 import cmdHelper from 'bpmn-js-properties-panel/lib/helper/CmdHelper';
 import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
 import eventDefinitionHelper from 'bpmn-js-properties-panel/lib/helper/EventDefinitionHelper';
+import conditionalProps from 'bpmn-js-properties-panel/lib/provider/camunda/parts/ConditionalProps.js';
 
-export default function ChorPropertiesProvider(injector) {
+export default function ChorPropertiesProvider(injector, bpmnFactory) {
 
   injector.invoke(BpmnPropertiesProvider, this);
 
@@ -24,6 +25,7 @@ export default function ChorPropertiesProvider(injector) {
         }
       }
     }
+    conditionalProps(generalTab[0].groups.filter(g => g.id === 'details')[0],element, bpmnFactory, e => e);
 
     return generalTab;
   };
@@ -58,5 +60,8 @@ export default function ChorPropertiesProvider(injector) {
 }
 
 inherits(ChorPropertiesProvider, BpmnPropertiesProvider);
-ChorPropertiesProvider.$inject = ['injector'];
+ChorPropertiesProvider.$inject = [
+  'injector',
+  'bpmnFactory'
+];
 
