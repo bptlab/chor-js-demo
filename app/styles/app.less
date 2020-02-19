@@ -33,7 +33,17 @@ html {
     font-size: 25px;
     font-weight: bold;
     font-family: Arial, sans-serif;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 0px;
+      width: 0px;
+    }
 
   }
   #close-toggle {
@@ -196,7 +206,6 @@ html {
 
   > a {
     font-size: 40px;
-
     text-align: center;
     text-decoration: none;
     color: rgb(51, 51, 51);
