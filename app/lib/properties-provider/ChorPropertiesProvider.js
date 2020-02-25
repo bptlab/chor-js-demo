@@ -5,6 +5,7 @@ import cmdHelper from 'bpmn-js-properties-panel/lib/helper/CmdHelper';
 import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
 import eventDefinitionHelper from 'bpmn-js-properties-panel/lib/helper/EventDefinitionHelper';
 import conditionalProps from 'bpmn-js-properties-panel/lib/provider/camunda/parts/ConditionalProps.js';
+import messageDefinition from './MessageDefinition';
 
 export default function ChorPropertiesProvider(injector, bpmnFactory) {
 
@@ -14,19 +15,21 @@ export default function ChorPropertiesProvider(injector, bpmnFactory) {
 
   this.getTabs = function(element) {
     let generalTab = superGetTabs.call(this, element);
-
+    const detailsGroup = generalTab[0].groups.filter(g => g.id === 'details')[0];
     if (is(element, 'bpmn:Event')) {
       // Conditional Events show Camunda specific options, we have to filter those
       if (element.businessObject.eventDefinitions) {
         const definition = element.businessObject.eventDefinitions[0];
         if (definition.$type === 'bpmn:ConditionalEventDefinition') {
-          generalTab[0].groups.filter(g => g.id === 'details')[0].entries = [];
-          this.conditionalEvent(generalTab[0].groups.filter(g => g.id === 'details')[0], element);
+          detailsGroup.entries = [];
+          this.conditionalEvent(detailsGroup, element);
         }
       }
     }
-    conditionalProps(generalTab[0].groups.filter(g => g.id === 'details')[0],element, bpmnFactory, e => e);
-
+    conditionalProps(detailsGroup, element, bpmnFactory, e => e);
+    if (is(element, 'bpmn:Message')) {
+      messageDefinition(detailsGroup, element, bpmnFactory, element.businessObject);
+    }
     return generalTab;
   };
 
