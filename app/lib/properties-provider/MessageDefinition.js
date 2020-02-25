@@ -1,4 +1,5 @@
 import eventDefinitionReference from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/implementation/EventDefinitionReference';
+import elementReferenceProperty from 'bpmn-js-properties-panel/lib/provider/bpmn/parts/implementation/ElementReferenceProperty';
 import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
 import cmdHelper from 'bpmn-js-properties-panel/lib/helper/CmdHelper';
 
@@ -8,9 +9,18 @@ export default function MessageDefinition(group, element, bpmnFactory, messageEv
   // I currently see no reason to duplicate ~100 lines of code, however, it might break in future versions of the panel-provider
   group.entries = group.entries.concat(eventDefinitionReference(element, messageEventDefinition, bpmnFactory, {
     label: 'Item Definition',
+    elementName: 'item-def',
     elementType: 'bpmn:ItemDefinition',
     referenceProperty: 'itemRef',
     newElementIdPrefix: 'ItemDef_'
+  }));
+
+  group.entries = group.entries.concat(elementReferenceProperty(element, messageEventDefinition, bpmnFactory, {
+    id: 'Item-Def-element-name',
+    label: 'Item Definition Name',
+    referenceProperty: 'itemRef',
+    modelProperty: 'name',
+    shouldValidate: false
   }));
 
   group.entries = group.entries.concat(createStructureRefTextField());
