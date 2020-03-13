@@ -2,6 +2,8 @@
 
 A simple demo application showing the usage of [`chor-js`](https://github.com/bptlab/chor-js) to view and edit BPMN 2.0 choreography diagrams in the browser.
 
+The demo also adds some features such as diagram up- and download, and a [validator](./app/lib/validator).
+
 __A live version can be found [on our website](https://bpt-lab.org/chor-js-demo/).__
 
 ## Usage
@@ -14,11 +16,14 @@ You can install and run the demo locally with Node.js.
 
 ```shell
 npm install
-npm run build
-npm run serve
+npm run dev
 ```
 
-The demo is then served to `http://localhost:9013`.
+The demo is then served to `http://localhost:1234`.
+You can also build it using `npm run build`.   
+We use [Parcel](https://parceljs.org) as a build tool, 
+thus, unless you set up the project as a development environment (see below) chor-js will not be transpiled and polyfilled (which should be no problem for modern browsers).
+
 
 #### Development Environment
 
@@ -43,11 +48,11 @@ npm run dev
 We also provide a `Dockerfile` to use with Docker.
 
 ```shell
-docker build -t chor-js-demo .
+docker build . -t chor-js-demo --no-cache
 docker run --rm -p 9013:9013 --name chor-js-demo -it chor-js-demo
 ```
 
-The demo is then served to `http://localhost:9013`.
+The demo is then served to `http://localhost:9013` as a production build using the latest version of chor-js (see Dockerfile).
 
 ## License
 

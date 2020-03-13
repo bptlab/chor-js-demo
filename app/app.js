@@ -1,12 +1,14 @@
+import 'core-js/stable';
 import xml from './diagrams/pizzaDelivery.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
-import ChoreoModeler from 'chor-js/lib/Modeler';
+import { Modeler } from 'chor-js';
 import Reporter from './lib/validator/Validator.js';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from './lib/properties-provider';
 
-var modeler = new ChoreoModeler({
+
+var modeler = new Modeler({
   container: '#canvas',
   propertiesPanel: {
     parent: '#properties-panel'
