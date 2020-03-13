@@ -1,8 +1,7 @@
-import 'core-js/stable';
 import xml from './diagrams/pizzaDelivery.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
 import $ from 'jquery';
-import { Modeler } from 'chor-js';
+import Modeler from 'chor-js/lib/Modeler';
 import Reporter from './lib/validator/Validator.js';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from './lib/properties-provider';
