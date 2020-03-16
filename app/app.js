@@ -6,6 +6,8 @@ import Reporter from './lib/validator/Validator.js';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from './lib/properties-provider';
 
+var lastFile;
+
 var modeler = new ChoreoModeler({
   container: '#canvas',
   propertiesPanel: {
@@ -22,6 +24,13 @@ var modeler = new ChoreoModeler({
 });
 
 renderModel(xml);
+
+function diagramName() {
+  if (lastFile) {
+    return lastFile.name;
+  }
+  return 'diagram.bpmn';
+}
 
 function renderModel(newXml) {
   modeler.importXML(newXml, {
@@ -94,21 +103,23 @@ $(function() {
 
   var exportArtifacts = debounce(function() {
     saveSVG(function(err, svg) {
-      setEncoded(downloadSvgLink, 'diagram.svg', err ? null : svg);
+      setEncoded(downloadSvgLink, diagramName() + '.svg', err ? null : svg);
     });
     saveDiagram(function(err, xml) {
-      setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
+      setEncoded(downloadLink, diagramName(), err ? null : xml);
     });
   }, 500);
 
   $('#js-new-diagram').click(function(e) {
     renderModel(blankXml);
+    lastFile = false;
     exportArtifacts();
   });
 
   $('input#file-input').change(function(e) {
     var reader = new FileReader();
     var file = document.querySelector('input[type=file]').files[0];
+    lastFile = file;
     reader.addEventListener('load', function() {
       const newXml = reader.result;
       renderModel(newXml);
