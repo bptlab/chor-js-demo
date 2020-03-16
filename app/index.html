@@ -21,11 +21,11 @@
     }
   </style>
 
-  <title>Choreography Modeler</title>
+  <title>[chor-js] Demo</title>
 </head>
 <body>
 
-  <div class="content with-diagram" id="js-drop-zone">
+  <div class="content">
     <div id="canvas">
       <div class="git-info" >
           <a class="icon-github-circled" href="https://github.com/bptlab/chor-js-demo" target="_blank"
@@ -33,22 +33,22 @@
       </div>
     </div>
     <div id="panel-toggle">
-      <button id="open-toggle" title="Open properties panel"><span>⟨</span></button>
-      <button id="close-toggle" title="Close properties panel"><span>⟩</span></button>
+      <div data-toggle-panel="properties-panel" title="Toggle properties panel"><span>Properties</span></div>
     </div>
-    <div id="properties-panel"></div>
+    <div id="properties-panel" class="side-panel hidden"></div>
   </div>
 
   <div class="buttons">
     <button id="js-new-diagram" class="icon-doc-new" title="Create new empty diagram"></button>
-    <button class="icon-folder" title="Select BPMN XML file" onclick="document.getElementById('file-input').click();"></button>
-    <input id="file-input" name="name" type="file" accept=".bpmn, .xml" style="display: none;" >
+    <button id="js-open-file" class="icon-folder" title="Select BPMN XML file"></button>
     <div class="divider"></div>
-    <a id="js-download-diagram" class="icon-file-code" href title="Download BPMN XML file"></a>
-    <a id="js-download-svg" class="icon-file-image" href title="Download as SVG image"></a>
+    <a id="js-download-diagram" class="icon-file-code" title="Download BPMN XML file"></a>
+    <a id="js-download-svg" class="icon-file-image" title="Download as SVG image"></a>
     <div class="divider"></div>
-    <button class="icon-bug" id="js-validate" title="Check diagram for problems"></button>
+    <button id="js-validate" class="icon-bug" title="Check diagram for problems"></button>
   </div>
+
+  <input id="file-input" name="name" type="file" accept=".bpmn, .xml" style="display: none;" />
 
   <script src="./app.js"></script>
 
