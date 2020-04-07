@@ -23,6 +23,14 @@
   "assetTypesToStringify": [
     "bpmn"
   ],
+  "browserslist": [
+    "last 2 Firefox versions",
+    "last 2 Chrome versions",
+    "last 2 Safari versions",
+    "last 2 Edge versions",
+    "last 2 Opera versions",
+    "last 2 Baidu versions"
+  ],
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "eslint": "^6.8.0",
@@ -32,7 +40,7 @@
     "parcel-plugin-stringify-anything": "^1.2.0"
   },
   "dependencies": {
-    "bpmn-js-properties-panel": "^0.33.1",
+    "bpmn-js-properties-panel": "^0.33.2",
     "chor-js": "^0.4.0",
     "inherits": "^2.0.4"
   }
