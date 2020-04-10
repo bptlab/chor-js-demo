@@ -17,7 +17,6 @@ export default function ChorPropertiesProvider(injector, bpmnFactory) {
     let generalTab = superGetTabs.call(this, element);
     const detailsGroup = generalTab[0].groups.filter(g => g.id === 'details')[0];
     if (is(element, 'bpmn:Event')) {
-
       // Conditional Events show Camunda specific options, we have to filter those
       if (element.businessObject.eventDefinitions) {
         const definition = element.businessObject.eventDefinitions[0];

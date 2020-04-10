@@ -6,7 +6,6 @@ import { is } from 'bpmn-js/lib/util/ModelUtil';
  * @param reporter {Reporter}
  */
 export default function participantNameConstraint(shape, reporter) {
-
   // Check if it is a band shape
   if (is(shape, 'bpmn:Participant')) {
     const id = shape.businessObject.id;

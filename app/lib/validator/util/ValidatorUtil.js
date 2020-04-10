@@ -9,7 +9,6 @@ import { is } from 'bpmn-js/lib/util/ModelUtil';
  */
 export function getConnectedElements(shape, direction, hasRequiredType) {
   if (direction !== 'incoming' && direction !== 'outgoing') {
-
     // This would currently reload the page due to debounce perhaps?
     throw new Error('Illegal Argument: ' + direction);
   }
@@ -26,7 +25,6 @@ export function getConnectedElements(shape, direction, hasRequiredType) {
 
   function track(nodeShape, direction) {
     const flowDirection = direction === 'incoming' ? 'source' : 'target';
-
     // avoid loops
     if (visited.includes(nodeShape)) {
       return;
@@ -88,7 +86,6 @@ export function participatesIn(participant, shape) {
  * @returns {Array}
  */
 export function flat(array) {
-
   // Todo: Replace this with the real flat or flatMap when we have an updated
   // build pipeline which allows polyfills.
   return array.reduce((acc, value) => acc.concat(value), []);
