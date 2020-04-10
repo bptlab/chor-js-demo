@@ -27,6 +27,7 @@ const modeler = new ChoreoModeler({
 // display the given model (XML representation)
 function renderModel(newXml) {
   modeler.importXML(newXml, {
+
     // choreoID: '_choreo1'
   }).then(() => {
     modeler.get('canvas').zoom('fit-viewport');
@@ -44,6 +45,7 @@ function diagramName() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
   // download diagram as XML
   const downloadLink = document.getElementById('js-download-diagram');
   downloadLink.addEventListener('click', async e => {
@@ -87,10 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
     panel.addEventListener('click', () => {
       panels.forEach(otherPanel => {
         if (panel === otherPanel && !panel.classList.contains('active')) {
+
           // show clicked panel if it is not already active, otherwise hide it as well
           panel.classList.add('active');
           document.getElementById(panel.dataset.togglePanel).classList.remove('hidden');
         } else {
+
           // hide all other panels
           otherPanel.classList.remove('active');
           document.getElementById(otherPanel.dataset.togglePanel).classList.add('hidden');
