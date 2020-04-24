@@ -1,7 +1,7 @@
 import PropertiesPanelModule from 'bpmn-js-properties-panel';
 import ChoreoModeler from 'chor-js/lib/Modeler';
 
-import xml from './diagrams/pizzaDelivery.bpmn';
+import xml from './diagrams/diagram.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
 import Reporter from './lib/validator/Validator.js';
 import PropertiesProviderModule from './lib/properties-provider';
