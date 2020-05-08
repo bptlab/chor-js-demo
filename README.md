@@ -2,7 +2,7 @@
 
 A simple demo application showing the usage of [`chor-js`](https://github.com/bptlab/chor-js) to view and edit BPMN 2.0 choreography diagrams in the browser.
 
-The demo also adds some features such as diagram up- and download, and a [validator](./app/lib/validator).
+The demo also adds some features such as diagram upload and download, and a [validator](./app/lib/validator).
 
 __A live version can be found [on our website](https://bpt-lab.org/chor-js-demo/).__
 
