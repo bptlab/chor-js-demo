@@ -19,11 +19,11 @@ npm install
 npm run dev
 ```
 
-The demo is then served to `http://localhost:9013`.
-You can also build it using `npm run build`.   
-We use [Parcel](https://parceljs.org) as a build tool, 
-thus, unless you set up the project as a development environment (see below) chor-js will not be transpiled and polyfilled (which should be no problem for modern browsers).
+You can also build it using `npm run build`.
 
+The demo is then served to `http://localhost:9013`.
+We use [Parcel](https://parceljs.org) as a build tool.
+Thus, unless you set up the project as a development environment (see below), chor-js will not be transpiled and polyfilled, which should be no problem for modern browsers.
 
 #### Development Environment
 
