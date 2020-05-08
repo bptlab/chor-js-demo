@@ -84,6 +84,18 @@ export function getNumberIncoming(shape) {
   return getConnectedElements(shape, 'incoming', e => is(e, 'bpmn:FlowNode')).length;
 }
 
+export function getOutgoingSequenceFlows(shape) {
+  return shape.outgoing.filter(s => is(s, 'bpmn:SequenceFlow'));
+}
+
+export function flowHasConditionExpression(shape) {
+  return !!shape.businessObject.conditionExpression;
+}
+
+export function getMessageFlows(reporter) {
+  return reporter.elementRegistry.filter(e => e.type ==='bpmn:Choreography')[0].businessObject.messageFlows;
+}
+
 /**
  * Stand-in function for flattening a array of depth 1.
  * @param {Array} array
