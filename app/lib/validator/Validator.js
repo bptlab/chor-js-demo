@@ -86,6 +86,7 @@ Reporter.prototype.showAnnotations = function() {
 
 /**
  * Display a list of annotations on their shape.
+ * @param shape
  * @param annotations {Array}
  */
 Reporter.prototype.displayOnShape = function(shape, annotations) {

@@ -5,9 +5,10 @@ import { is } from 'bpmn-js/lib/util/ModelUtil';
  * @param shape The shape to start from
  * @param direction 'incoming' || 'outgoing' if to check connected shapes from incoming or outgoing
  * @param hasRequiredType {function} function to determine type of connected elements
+ * @param collectElement {function}
  * @returns {Array}
  */
-export function getConnectedElements(shape, direction, hasRequiredType) {
+export function getConnectedElements(shape, direction, hasRequiredType, collectElement) {
   if (direction !== 'incoming' && direction !== 'outgoing') {
     // This would currently reload the page due to debounce perhaps?
     throw new Error('Illegal Argument: ' + direction);
@@ -22,6 +23,7 @@ export function getConnectedElements(shape, direction, hasRequiredType) {
 
   let visited = [];
   let connected = [];
+  let collected = [];
 
   function track(nodeShape, direction) {
     const flowDirection = direction === 'incoming' ? 'source' : 'target';
@@ -30,6 +32,9 @@ export function getConnectedElements(shape, direction, hasRequiredType) {
       return;
     }
     visited.push(nodeShape);
+    if (collectElement && collectElement(nodeShape)) {
+      collected.push(nodeShape);
+    }
 
     // add to connected if we have reached an activity
     if (shape !== nodeShape && hasRequiredType(nodeShape)) {
@@ -45,6 +50,9 @@ export function getConnectedElements(shape, direction, hasRequiredType) {
   }
 
   track(shape, direction);
+  if (collectElement) {
+    return collected;
+  }
   return connected;
 }
 
