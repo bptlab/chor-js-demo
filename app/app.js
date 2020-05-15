@@ -3,7 +3,7 @@ import ChoreoModeler from 'chor-js/lib/Modeler';
 
 import xml from './diagrams/exclusiveGateway.bpmn';
 import blankXml from './diagrams/newDiagram.bpmn';
-import Reporter from './lib/validator/Validator.js';
+import Reporter from './lib/validator/Reporter.js';
 import PropertiesProviderModule from './lib/properties-provider';
 
 let lastFile;

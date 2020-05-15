@@ -1,4 +1,8 @@
 import { heightOfTopBands } from 'chor-js/lib/util/BandUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil';
+
+import { getBBox } from 'diagram-js/lib/util/Elements';
+
 
 import {
   isChoreoActivity
@@ -95,7 +99,17 @@ Reporter.prototype.displayOnShape = function(shape, annotations) {
     .filter(annotation => annotation.shape === shape)
     .sort((a,b) => b.level - a.level);
 
-  const topOffset = isChoreoActivity(shape) ? heightOfTopBands(shape) : -7;
+  let position;
+  if (is(shape, 'bpmn:SequenceFlow')) {
+    position = this._getFlowOverlayPosition(shape);
+  } else {
+    const topOffset = isChoreoActivity(shape) ? heightOfTopBands(shape) : -7;
+    position = {
+      top: topOffset,
+      left: shape.width - 12
+    };
+  }
+
   const level = Math.max(...annotations.map(annotation => annotation.level));
   const count = annotations.length;
 
@@ -133,10 +147,7 @@ Reporter.prototype.displayOnShape = function(shape, annotations) {
   html += '</div>';
 
   const newOverlayId = this.overlays.add(shape.id, {
-    position: {
-      top: topOffset,
-      left: shape.width - 12
-    },
+    position: position,
     html: html
   });
   this.overlayIDs.push(newOverlayId);
@@ -146,4 +157,24 @@ Reporter.prototype.clearAll = function() {
   this.overlayIDs.forEach(id => this.overlays.remove(id));
   this.shapeAnnotations = {};
   this.annotations = [];
+};
+
+Reporter.prototype._getFlowOverlayPosition = function(sequenceFlow) {
+
+  const bbox = getBBox([sequenceFlow]);
+  let topOffset = 0;
+  let leftOffset = 0;
+  if (sequenceFlow.waypoints.length > 2) {
+    const target = sequenceFlow.waypoints[Math.floor(sequenceFlow.waypoints.length / 2)];
+    leftOffset = target.x - bbox.x;
+    topOffset = target.y - bbox.y;
+  } else {
+    leftOffset = bbox.width / 2 - 6; // 6 for the arrow
+    topOffset = bbox.height / 2;
+  }
+
+  return {
+    top: topOffset - 10,
+    left: leftOffset - 10
+  };
 };
