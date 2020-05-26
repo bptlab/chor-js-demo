@@ -1,13 +1,12 @@
 {
   "name": "chor-js-demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A demo showcasing the chor-js BPMN 2.0 choreography diagram modeler.",
   "main": "app/app.js",
   "scripts": {
     "lint": "eslint .",
-    "build": "grunt build",
-    "serve": "grunt serve",
-    "dev": "grunt auto-build"
+    "build": "parcel build app/index.html -d build --public-url ./",
+    "dev": "parcel app/index.html -p 9013"
   },
   "keywords": [
     "choreography-modeler"
@@ -21,26 +20,28 @@
     "type": "git",
     "url": "https://github.com/bptlab/chor-js-demo"
   },
+  "assetTypesToStringify": [
+    "bpmn"
+  ],
+  "browserslist": [
+    "last 2 Firefox versions",
+    "last 2 Chrome versions",
+    "last 2 Safari versions",
+    "last 2 Edge versions",
+    "last 2 Opera versions",
+    "last 2 Baidu versions"
+  ],
   "devDependencies": {
-    "esmify": "^2.1.1",
-    "browserify": "^16.1.0",
+    "@babel/core": "^7.8.7",
     "eslint": "^4.19.1",
     "eslint-plugin-bpmn-io": "^0.7.0",
-    "grunt": "~0.4.4",
-    "grunt-browserify": "^4.0.0",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-connect": "~0.11.2",
-    "grunt-contrib-copy": "~0.8.1",
-    "grunt-contrib-less": "^2.0.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "load-grunt-tasks": "~3.2.0",
-    "stringify": "^3.1.0",
-    "time-grunt": "^0.3.2",
-    "watchify": "^3.10.0"
+    "less": "^3.11.1",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-stringify-anything": "^1.2.0"
   },
   "dependencies": {
-    "bpmn-js-properties-panel": "^0.33.1",
-    "chor-js": "^0.4.0",
-    "inherits": "^2.0.1"
+    "bpmn-js-properties-panel": "^0.33.2",
+    "chor-js": "^0.5.0",
+    "inherits": "^2.0.4"
   }
 }
