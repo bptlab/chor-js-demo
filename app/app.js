@@ -26,9 +26,7 @@ const modeler = new ChoreoModeler({
 
 // display the given model (XML representation)
 function renderModel(newXml) {
-  modeler.importXML(newXml, {
-    // choreoID: '_choreo1'
-  }).then(() => {
+  modeler.importXML(newXml).then(() => {
     modeler.get('canvas').zoom('fit-viewport');
   }).catch(error => {
     console.error('something went wrong: ', error);
