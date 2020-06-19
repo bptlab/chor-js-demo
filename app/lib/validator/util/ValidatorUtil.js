@@ -104,10 +104,6 @@ export function participatesIn(participant, shape) {
   return getParticipants(shape).includes(participant);
 }
 
-export function getNumberIncoming(shape) {
-  return getConnectedElements(shape, 'incoming', e => is(e, 'bpmn:FlowNode')).length;
-}
-
 export function getOutgoingSequenceFlows(shape) {
   return shape.outgoing.filter(s => is(s, 'bpmn:SequenceFlow'));
 }
