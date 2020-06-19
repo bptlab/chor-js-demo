@@ -4,23 +4,37 @@ import {
   getConnectedElements,
   isInitiating,
   getParticipants,
-  isChoreoActivity, getNumberIncoming
+  isChoreoActivity,
+  isIntermediateTimerCatchEvent,
+  getTimerDefinitionType
 } from '../util/ValidatorUtil';
 
 /**
- * Checks the basic Choreo flow constraint. Compare 11.5.6 The Sequencing of Activities
+ * Checks the basic sequence flow constraint.
+ * Compare with Chapter "11.5.6 The Sequencing of Activities" in the BPMN standard.
+ *
  * @param shape
  * @param reporter
  */
 export default function simpleFlowConstraint(shape, reporter) {
   if (is(shape, 'bpmn:Participant')) {
-    let predecessors = getConnectedElements(shape, 'incoming', isChoreoActivity);
-
     if (isInitiating(shape)) {
-      let participant = getParticipants(shape)[0];
+      const participant = shape.businessObject;
+
+      // Get all relevant predecessors. We also stop traversing the model once we encounter
+      // an absolute timer intermediate catch event, since those suspend the simple flow
+      // constraint (see p. 341 in the standard).
+      const predecessors = getConnectedElements(shape, 'incoming', e => {
+        return isChoreoActivity(e) || (
+          isIntermediateTimerCatchEvent(e) &&
+          getTimerDefinitionType(e) === 'timeDate'
+        );
+      }).filter(isChoreoActivity);
+
+      // For the remaining choreography tasks, check whether they include this participant.
       let simpleConstraint = true;
-      predecessors.forEach(activityShape => {
-        simpleConstraint = simpleConstraint && getParticipants(activityShape).includes(participant);
+      predecessors.forEach(e => {
+        simpleConstraint = simpleConstraint && getParticipants(e).includes(participant);
       });
       if (!simpleConstraint) {
         let potentialTimer = getConnectedElements(shape, 'incoming', e => isAbsoluteInterCatchTimerEvent(e));
