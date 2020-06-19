@@ -1,6 +1,6 @@
 # chor-js-demo
 
-__[:rocket: Live Version :rocket:](https://bpt-lab.org/chor-js-demo/).__
+__[:rocket: Live Version :rocket:](https://bpt-lab.org/chor-js-demo/)__
 
 A simple demo application showing the usage of the _npm package_ of [`chor-js`](https://github.com/bptlab/chor-js) to view and edit BPMN 2.0 choreography diagrams in the browser.
 
