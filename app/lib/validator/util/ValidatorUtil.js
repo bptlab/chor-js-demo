@@ -76,6 +76,22 @@ export function isChoreoActivity(shape) {
   return is(shape, 'bpmn:ChoreographyActivity');
 }
 
+export function getTimerDefinitionType(shape) {
+  const def = shape.businessObject.eventDefinitions[0];
+  if (def.timeDate) {
+    return 'timeDate';
+  } else if (def.timeDuration) {
+    return 'timeDuration';
+  } else if (def.timeCycle) {
+    return 'timeCycle';
+  }
+}
+
+export function isIntermediateTimerCatchEvent(shape) {
+  return is(shape, 'bpmn:IntermediateCatchEvent')
+    && shape.businessObject.eventDefinitions[0].$type === 'bpmn:TimerEventDefinition';
+}
+
 export function participatesIn(participant, shape) {
   return getParticipants(shape).includes(participant);
 }
