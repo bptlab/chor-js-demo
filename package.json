@@ -42,10 +42,6 @@
   "dependencies": {
     "bpmn-js-properties-panel": "^0.33.2",
     "chor-js": "^0.6.0",
-    "inherits": "^2.0.4",
-    "bpmn-js": "^7.2.0",
-    "diagram-js": "^6.6.1",
-    "min-dash": "^3.5.2",
-    "tiny-svg": "^2.2.2"
+    "inherits": "^2.0.4"
   }
 }
