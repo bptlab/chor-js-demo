@@ -1,10 +1,6 @@
 {
   "name": "chor-js-demo",
-<<<<<<< HEAD
-  "version": "2.0.0",
-=======
   "version": "1.1.0",
->>>>>>> origin/master
   "description": "A demo showcasing the chor-js BPMN 2.0 choreography diagram modeler.",
   "main": "app/app.js",
   "scripts": {
