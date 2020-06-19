@@ -34,8 +34,7 @@ function checkKnowledgeOfMessage(target, body, precedingMessageFlows, reporter, 
 export default function exclusiveGatewayConstraint(shape, reporter) {
   if (is(shape, 'bpmn:ExclusiveGateway')) {
     const flows = getOutgoingSequenceFlows(shape);
-    const precedingActivities = getConnectedElements(shape, 'incoming',
-      e => is(e, 'bpmn:StartEvent'), isChoreoActivity);
+    const precedingActivities = getConnectedElements(shape, 'incoming', isChoreoActivity, true);
     const precedingMessageFlows = flat(precedingActivities.map(s => s.businessObject.messageFlowRef));
     for (let flow of flows) {
       if (flowHasConditionExpression(flow)) {
@@ -56,7 +55,7 @@ function getNextActivities(sequenceFlow) {
   if (isChoreoActivity(sequenceFlow.target)) {
     return [sequenceFlow.target];
   } else {
-    return getConnectedElements(sequenceFlow.target,'outgoing', isChoreoActivity);
+    return getConnectedElements(sequenceFlow.target, 'outgoing', isChoreoActivity);
   }
 
 }
