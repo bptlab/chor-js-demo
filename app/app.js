@@ -1,10 +1,11 @@
-import PropertiesPanelModule from 'bpmn-js-properties-panel';
 import ChoreoModeler from 'chor-js/lib/Modeler';
+import PropertiesPanelModule from 'bpmn-js-properties-panel';
 
-import xml from './diagrams/diagram.bpmn';
-import blankXml from './diagrams/newDiagram.bpmn';
 import Reporter from './lib/validator/Validator.js';
 import PropertiesProviderModule from './lib/properties-provider';
+
+import xml from './diagrams/pizzaDelivery.bpmn';
+import blankXml from './diagrams/newDiagram.bpmn';
 
 let lastFile;
 let isValidating = false;
@@ -15,6 +16,8 @@ const modeler = new ChoreoModeler({
   propertiesPanel: {
     parent: '#properties-panel'
   },
+  // remove the properties' panel if you use the Viewer
+  // or NavigatedViewer modules of chor-js
   additionalModules: [
     PropertiesPanelModule,
     PropertiesProviderModule
@@ -25,14 +28,8 @@ const modeler = new ChoreoModeler({
 });
 
 // display the given model (XML representation)
-function renderModel(newXml) {
-  modeler.importXML(newXml, {
-    // choreoID: '_choreo1'
-  }).then(() => {
-    modeler.get('canvas').zoom('fit-viewport');
-  }).catch(error => {
-    console.error('something went wrong: ', error);
-  });
+async function renderModel(newXml) {
+  await modeler.importXML(newXml);
 }
 
 // returns the file name of the diagram currently being displayed

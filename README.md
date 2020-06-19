@@ -1,29 +1,31 @@
 # chor-js-demo
 
-A simple demo application showing the usage of [`chor-js`](https://github.com/bptlab/chor-js) to view and edit BPMN 2.0 choreography diagrams in the browser.
+__[:rocket: Live Version :rocket:](https://bpt-lab.org/chor-js-demo/)__
 
-The demo also adds some features such as diagram up- and download, and a [validator](./app/lib/validator).
+A simple demo application showing the usage of the _npm package_ of [`chor-js`](https://github.com/bptlab/chor-js) to view and edit BPMN 2.0 choreography diagrams in the browser.
 
-__A live version can be found [on our website](https://bpt-lab.org/chor-js-demo/).__
+The demo also adds some features such as diagram upload and download, and a [validator](./app/lib/validator).
 
-## Usage
+> For an example on how to use the pre-packaged version of chor-js, please refer to the [README there](https://github.com/bptlab/chor-js).
 
-### Node.js
+## Local Usage
 
-You can install and run the demo locally with Node.js.
+### Node
 
-#### Use Only
+You can install and run the demo locally using Node.js.
+
+#### Run Only
 
 ```shell
 npm install
 npm run dev
 ```
 
-The demo is then served to `http://localhost:9013`.
-You can also build it using `npm run build`.   
-We use [Parcel](https://parceljs.org) as a build tool, 
-thus, unless you set up the project as a development environment (see below) chor-js will not be transpiled and polyfilled (which should be no problem for modern browsers).
+You can also build it using `npm run build`.
 
+The demo is then served to `http://localhost:9013`.
+We use [Parcel](https://parceljs.org) as a build tool.
+Thus, unless you set up the project as a development environment (see below), chor-js will not be transpiled and polyfilled, which should be no problem for modern browsers.
 
 #### Development Environment
 

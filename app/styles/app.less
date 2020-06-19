@@ -1,3 +1,7 @@
+@import url("../../node_modules/chor-js/assets/styles/chor-js.css");
+@import url("../icons/css/chor-editor.css");
+@import url("../../node_modules/bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css");
+
 * {
   box-sizing: border-box;
 }
@@ -179,22 +183,30 @@ html {
   }
 }
 
-.git-info {
+ul.corner-links {
+  display: block;
   position: absolute;
-  right: 67px;
-  bottom: 15px;
-  z-index: 101;
-  text-align: center;
-  vertical-align: middle;
-  width: 52px; // Same as bpmn.io logo
-  max-height: 52px;
-  min-height: 52px;
+  right: 80px;
+  bottom: 10px;
+  margin: 0;
+  z-index: 100;
 
-  > a {
-    font-size: 40px;
-    text-align: center;
-    text-decoration: none;
-    color: rgb(51, 51, 51);
+  display: flex;
+  list-style: none;
+  align-items: center;
+
+  > li {
+    margin-left: 10px;
+
+    > a {
+      font-size: 10px;
+      color: #404040;
+    }
+
+    > a.icon-github-circled {
+      font-size: 30px;
+      text-decoration: none;
+    }
   }
 }
 
