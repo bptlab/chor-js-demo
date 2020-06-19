@@ -183,14 +183,31 @@ html {
   }
 }
 
-a.git-info {
+ul.corner-links {
+  display: block;
   position: absolute;
   right: 80px;
   bottom: 10px;
-  font-size: 30px;
-  text-align: center;
-  text-decoration: none;
-  color: rgb(51, 51, 51);
+  margin: 0;
+  z-index: 100;
+
+  display: flex;
+  list-style: none;
+  align-items: center;
+
+  > li {
+    margin-left: 10px;
+
+    > a {
+      font-size: 10px;
+      color: #404040;
+    }
+
+    > a.icon-github-circled {
+      font-size: 30px;
+      text-decoration: none;
+    }
+  }
 }
 
 .validation-annotation {
