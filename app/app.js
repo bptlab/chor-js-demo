@@ -117,6 +117,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // drag & drop file
+  const dropZone = document.body;
+  dropZone.addEventListener('drop', e => {
+    console.log('File dropped');
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const reader = new FileReader();
+      lastFile = file;
+      reader.addEventListener('load', () => {
+        renderModel(reader.result);
+      }, false);
+      reader.readAsText(file);
+    }
+  });
+  dropZone.addEventListener('dragover', e => {
+    console.log('File in drop zone');
+    e.preventDefault();
+  });
+
   // validation logic and toggle
   const reporter = new Reporter(modeler);
   const validateButton = document.getElementById('js-validate');
