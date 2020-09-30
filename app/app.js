@@ -120,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // drag & drop file
   const dropZone = document.body;
   dropZone.addEventListener('drop', e => {
-    console.log('File dropped');
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file) {
@@ -133,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   dropZone.addEventListener('dragover', e => {
-    console.log('File in drop zone');
     e.preventDefault();
   });
 
