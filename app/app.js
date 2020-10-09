@@ -119,8 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // drag & drop file
   const dropZone = document.body;
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('is-dragover');
+  });
   dropZone.addEventListener('drop', e => {
     e.preventDefault();
+    dropZone.classList.remove('is-dragover');
     const file = e.dataTransfer.files[0];
     if (file) {
       const reader = new FileReader();
@@ -130,9 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, false);
       reader.readAsText(file);
     }
-  });
-  dropZone.addEventListener('dragover', e => {
-    e.preventDefault();
   });
 
   // validation logic and toggle
