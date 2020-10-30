@@ -18,7 +18,7 @@ html {
   margin: 0;
 }
 
-#panel-toggle {
+div#panel-toggle {
   flex-shrink: 0;
   width: 20px;
 
@@ -57,6 +57,10 @@ html {
 
     &.active {
       border-left: 2px solid #52B415;
+    }
+
+    &:hover {
+      background-color: #eee;
     }
   }
 }
@@ -162,20 +166,20 @@ html {
     display: block;
     width: 40px;
     padding: 0px;
-    background-color: #FAFAFA;
-    border: solid 1px #CCC;
+    background-color: var(--palette-background-color);
+    border: solid 1px var(--palette-border-color);
     border-radius: 2px;
     text-decoration: none;
-    color: rgb(51, 51, 51);
+    color: var(--palette-entry-color);
   }
 
   a:hover, button:hover {
-    color: #FF7400;
+    color: var(--palette-entry-hover-color);
     cursor: pointer;
   }
 
   .selected {
-    background-color: #d3d3d3;
+    color: var(--palette-entry-selected-color);
   }
 
   button {
