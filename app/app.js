@@ -117,6 +117,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // drag & drop file
+  const dropZone = document.body;
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('is-dragover');
+  });
+  dropZone.addEventListener('dragleave', e => {
+    e.preventDefault();
+    dropZone.classList.remove('is-dragover');
+  });
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('is-dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const reader = new FileReader();
+      lastFile = file;
+      reader.addEventListener('load', () => {
+        renderModel(reader.result);
+      }, false);
+      reader.readAsText(file);
+    }
+  });
+
   // validation logic and toggle
   const reporter = new Reporter(modeler);
   const validateButton = document.getElementById('js-validate');
