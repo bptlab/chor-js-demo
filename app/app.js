@@ -44,31 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // download diagram as XML
   const downloadLink = document.getElementById('js-download-diagram');
   downloadLink.addEventListener('click', async e => {
-    await modeler.saveXML({ format: true }, (err, xml) => {
-      if (err) {
-        e.preventDefault();
-        e.stopPropagation();
-        alert(err);
-      } else {
-        downloadLink['href'] = 'data:application/bpmn20-xml;charset=UTF-8,' + encodeURIComponent(xml);
-        downloadLink['download'] = diagramName();
-      }
-    });
+    const result = await modeler.saveXML({ format: true });
+    downloadLink['href'] = 'data:application/bpmn20-xml;charset=UTF-8,' + encodeURIComponent(result.xml);
+    downloadLink['download'] = diagramName();
   });
 
   // download diagram as SVG
   const downloadSvgLink = document.getElementById('js-download-svg');
   downloadSvgLink.addEventListener('click', async e => {
-    await modeler.saveSVG((err, svg) => {
-      if (err) {
-        e.preventDefault();
-        e.stopPropagation();
-        alert(err);
-      } else {
-        downloadSvgLink['href'] = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
-        downloadSvgLink['download'] = diagramName() + '.svg';
-      }
-    });
+    const result = await modeler.saveSVG();
+    downloadSvgLink['href'] = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(result.svg);
+    downloadSvgLink['download'] = diagramName() + '.svg';
   });
 
   // open file dialog
