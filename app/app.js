@@ -123,6 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     dropZone.classList.add('is-dragover');
   });
+  dropZone.addEventListener('dragleave', e => {
+    e.preventDefault();
+    dropZone.classList.remove('is-dragover');
+  });
   dropZone.addEventListener('drop', e => {
     e.preventDefault();
     dropZone.classList.remove('is-dragover');
