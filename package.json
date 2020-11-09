@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "bpmn-js-properties-panel": "^0.35.0",
-    "chor-js": "0.6.2",
+    "chor-js": "0.7.0",
     "inherits": "^2.0.4"
   }
 }
