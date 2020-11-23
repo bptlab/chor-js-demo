@@ -1,0 +1,7 @@
+buildimage:
+  stage: build
+  tags:
+    - dockerbuilder
+  script:
+    - docker build -t bptlab/chor-js-demo:master
+    - docker push bptlab/chor-js-demo:master
