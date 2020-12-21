@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // create new diagram
   const newDiagram = document.getElementById('js-new-diagram');
-  newDiagram.addEventListener('click', e => {
-    renderModel(blankXml);
+  newDiagram.addEventListener('click', async e => {
+    await renderModel(blankXml);
     lastFile = false;
   });
 
@@ -96,8 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (file) {
       const reader = new FileReader();
       lastFile = file;
-      reader.addEventListener('load', () => {
-        renderModel(reader.result);
+      reader.addEventListener('load', async () => {
+        await renderModel(reader.result);
+        loadDiagram.value = null; // allows reloading the same file
       }, false);
       reader.readAsText(file);
     }
