@@ -22,6 +22,7 @@ deploycontainer:
     # take care to deploy private key in GitLab as corresponding env var
     - echo "$identitykey" | ssh-add -
   script:
-    - ssh -o StrictHostKeyChecking=no $deployuser@$targethost 'docker stop chor-js-demo && docker pull bptlab/chor-js-demo:master && docker run --rm -d -p 9013:9013 --name chor-js-demo --restart always bptlab/chor-js-demo:master'
+    - ssh -o StrictHostKeyChecking=no $deployuser@$targethost 'docker stop chor-js-demo || true && docker rm chor-js-demo || true'
+    - ssh -o StrictHostKeyChecking=no $deployuser@$targethost 'docker pull bptlab/chor-js-demo:master && docker run -d -p 9013:9013 --name chor-js-demo --restart always bptlab/chor-js-demo:master'
   only:
     - master
