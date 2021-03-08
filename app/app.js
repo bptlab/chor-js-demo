@@ -157,4 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
 
+window.addEventListener('beforeunload', function(e) {
+  // see https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
+  e.preventDefault();
+  e.returnValue = '';
+});
+
 renderModel(xml);
