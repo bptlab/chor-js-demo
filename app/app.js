@@ -9,6 +9,7 @@ import blankXml from './diagrams/newDiagram.bpmn';
 
 let lastFile;
 let isValidating = false;
+let isDirty = false;
 
 // create and configure a chor-js instance
 const modeler = new ChoreoModeler({
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const result = await modeler.saveXML({ format: true });
     downloadLink['href'] = 'data:application/bpmn20-xml;charset=UTF-8,' + encodeURIComponent(result.xml);
     downloadLink['download'] = diagramName();
+    isDirty = false;
   });
 
   // download diagram as SVG
@@ -99,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.addEventListener('load', async () => {
         await renderModel(reader.result);
         loadDiagram.value = null; // allows reloading the same file
+        isDirty = false;
       }, false);
       reader.readAsText(file);
     }
@@ -147,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isValidating) {
       reporter.validateDiagram();
     }
+    isDirty = true;
   });
   modeler.on('import.render.complete', () => {
     if (isValidating) {
@@ -159,9 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
 window.bpmnjs = modeler;
 
 window.addEventListener('beforeunload', function(e) {
-  // see https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
-  e.preventDefault();
-  e.returnValue = '';
+  if (isDirty) {
+    // see https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
+    e.preventDefault();
+    e.returnValue = '';
+  }
 });
 
 renderModel(xml);
