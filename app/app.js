@@ -9,6 +9,7 @@ import blankXml from './diagrams/newDiagram.bpmn';
 
 let lastFile;
 let isValidating = false;
+let isDirty = false;
 
 // create and configure a chor-js instance
 const modeler = new ChoreoModeler({
@@ -30,6 +31,7 @@ const modeler = new ChoreoModeler({
 // display the given model (XML representation)
 async function renderModel(newXml) {
   await modeler.importXML(newXml);
+  isDirty = false;
 }
 
 // returns the file name of the diagram currently being displayed
@@ -47,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const result = await modeler.saveXML({ format: true });
     downloadLink['href'] = 'data:application/bpmn20-xml;charset=UTF-8,' + encodeURIComponent(result.xml);
     downloadLink['download'] = diagramName();
+    isDirty = false;
   });
 
   // download diagram as SVG
@@ -147,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isValidating) {
       reporter.validateDiagram();
     }
+    isDirty = true;
   });
   modeler.on('import.render.complete', () => {
     if (isValidating) {
@@ -157,5 +161,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // expose bpmnjs to window for debugging purposes
 window.bpmnjs = modeler;
+
+window.addEventListener('beforeunload', function(e) {
+  if (isDirty) {
+    // see https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
 
 renderModel(xml);
