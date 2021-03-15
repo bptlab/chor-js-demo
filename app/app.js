@@ -31,6 +31,7 @@ const modeler = new ChoreoModeler({
 // display the given model (XML representation)
 async function renderModel(newXml) {
   await modeler.importXML(newXml);
+  isDirty = false;
 }
 
 // returns the file name of the diagram currently being displayed
@@ -101,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.addEventListener('load', async () => {
         await renderModel(reader.result);
         loadDiagram.value = null; // allows reloading the same file
-        isDirty = false;
       }, false);
       reader.readAsText(file);
     }
