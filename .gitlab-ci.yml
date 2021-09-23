@@ -2,7 +2,7 @@ stages:
   - build
   - deploy
 
-buildimage:
+buildImage:
   stage: build
   tags:
     - dockerbuilder
@@ -10,9 +10,11 @@ buildimage:
     - docker build -t bptlab/chor-js-demo:master .
     - docker push bptlab/chor-js-demo:master
 
-deploycontainer:
+deployOnDockerHost:
   stage: deploy
-  image: alpine:3.11
+  only:
+    - master
+  image: alpine:3.12
   before_script:
     - apk update
     # configure ssh tools
@@ -22,7 +24,4 @@ deploycontainer:
     # take care to deploy private key in GitLab as corresponding env var
     - echo "$identitykey" | ssh-add -
   script:
-    - ssh -o StrictHostKeyChecking=no $deployuser@$targethost 'docker stop chor-js-demo || true && docker rm chor-js-demo || true'
-    - ssh -o StrictHostKeyChecking=no $deployuser@$targethost 'docker pull bptlab/chor-js-demo:master && docker run -d -p 9013:9013 --name chor-js-demo --restart always bptlab/chor-js-demo:master'
-  only:
-    - master
+    - ssh -o StrictHostKeyChecking=no $deployuser@$targethost '/var/docker-routines/chor-js-demo/deploy.sh'
